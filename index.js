@@ -9,6 +9,8 @@ const { default: dist } = require('discord.js/node_modules/@discordjs/collection
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 
+var idle = 0;
+
 client.commands = new Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -29,6 +31,7 @@ const distube = new DisTube.default(client, {
 });
 
 distube.on("playSong", (queue,song) => {
+	idle = 0;
 	const playEmbed = new MessageEmbed()
 		.setColor('#1db954')
 		.setTitle("▶️   Now playing")
@@ -40,9 +43,30 @@ distube.on("playSong", (queue,song) => {
 });
 
 distube.on("addSong", (queue, song) => {
-	queue.textChannel.send(`✅   Added \`${song.name}\` - \`(${song.formattedDuration})\` to the queue (requested by \`${song.member.displayName}\`)`);
+	idle = 0;
+	queue.textChannel.send(`🆕   Added \`${song.name}\` - \`(${song.formattedDuration})\` to the queue (requested by \`${song.member.displayName}\`)`);
 });
 
+distube.on("addList", (queue, list) => {
+	idle = 0;
+	queue.textChannel.send(`🆕   Added playlist to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
+});
+
+distube.on("finish", (queue) => {
+	idle++;
+	firstInterval = setInterval(function () {
+		if (idle == 0) {
+			clearInterval(firstInterval);
+		}
+		idle++;
+		console.log(idle);
+		if (idle == 20) {
+			queue.voices.get(queue.textChannel).leave();
+			clearInterval(firstInterval);
+		}
+	}, 2000);
+	console.log("Wird aufgerufen");
+});
 
 client.once('ready', () => {
 	console.log('[soupify] Ready!');

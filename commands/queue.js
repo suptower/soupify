@@ -77,18 +77,18 @@ module.exports = {
                             .setDisabled(true),
             );
             let infoBuffer = "";
-            let offset = 0;
+            var offset = 0;
             var msgId = 0;
             for (let i = 0; (i < 10 && i < queue.songs.length); i++) {
                 infoBuffer += (i+offset) + ' - ' + queue.songs[i].name + '\n';
             }
             if (queue.songs.length > 10) {
-                await interaction.channel.send({ content: '📻   **Current Queue**\n```' + infoBuffer + '```', components: [row0] }).then(message => {
+                await interaction.channel.send({ content: '```------------------------------ 📻   CURRENT QUEUE ------------------------------\n\n' + infoBuffer + '\n------------------------------ 📻   PAGE ('+((offset/10)+1)+'/'+parseInt(((queue.songs.length/10)+1))+')   ------------------------------```', components: [row0] }).then(message => {
                     msgId = message.id;
                 });
             }
             else {
-                await interaction.channel.send({ content: '📻   **Current Queue**\n```' + infoBuffer + '```', components: [row3] }).then(message => {
+                await interaction.channel.send({ content: '```------------------------------ 📻   CURRENT QUEUE ------------------------------\n\n' + infoBuffer + '\n------------------------------ 📻   PAGE ('+((offset/10)+1)+'/'+parseInt(((queue.songs.length/10)+1))+')   ------------------------------```', components: [row3] }).then(message => {
                     msgId = message.id;
                 });
             }
@@ -106,10 +106,10 @@ module.exports = {
                         }
                     }
                     if (offset+10 >= queue.songs.length) {
-                        await i.update({ content: '📻   **Current Queue**\n```' + infoBuffer + '```', components: [row2] });
+                        await i.update({ content: '```------------------------------ 📻   CURRENT QUEUE ------------------------------\n\n' + infoBuffer + '\n------------------------------ 📻   PAGE ('+((offset/10)+1)+'/'+parseInt(((queue.songs.length/10)+1))+')   ------------------------------```', components: [row2] });
                     }
                     else {
-                        await i.update({ content: '📻   **Current Queue**\n```' + infoBuffer + '```', components: [row1] });
+                        await i.update({ content: '```------------------------------ 📻   CURRENT QUEUE ------------------------------\n\n' + infoBuffer + '\n------------------------------ 📻   PAGE ('+((offset/10)+1)+'/'+parseInt(((queue.songs.length/10)+1))+')   ------------------------------```', components: [row1] });
                     }
                 }
                 else if (i.customId === 'prev' && i.message.id== msgId) {
@@ -122,10 +122,10 @@ module.exports = {
                         }
                     }
                     if (offset == 0) {
-                        await i.update({ content: '📻   **Current Queue**\n```' + infoBuffer + '```', components: [row0] });
+                        await i.update({ content: '```------------------------------ 📻   CURRENT QUEUE ------------------------------\n\n' + infoBuffer + '\n------------------------------ 📻   PAGE ('+((offset/10)+1)+'/'+parseInt(((queue.songs.length/10)+1))+')   ------------------------------```', components: [row0] });
                     }
                     else {
-                        await i.update({ content: '📻   **Current Queue**\n```' + infoBuffer + '```', components: [row1] });
+                        await i.update({ content: '```------------------------------ 📻   CURRENT QUEUE ------------------------------\n\n' + infoBuffer + '\n------------------------------ 📻   PAGE ('+((offset/10)+1)+'/'+parseInt(((queue.songs.length/10)+1))+')   ------------------------------```', components: [row1] });
                     }
                 }
             })
