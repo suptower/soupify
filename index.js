@@ -4,7 +4,6 @@ const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const DisTube = require('distube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
 const { SpotifyPlugin } = require('@distube/spotify');
-const { token } = require('./config.json');
 const { default: dist } = require('discord.js/node_modules/@discordjs/collection');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
@@ -87,4 +86,4 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
-client.login(token);
+client.login(process.env.token);
