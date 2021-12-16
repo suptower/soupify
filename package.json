@@ -24,5 +24,8 @@
     "distube": "^3.0.4",
     "ffmpeg-static": "^4.4.0",
     "libsodium-wrappers": "^0.7.9"
+  },
+  "engines": {
+    "node": "16.13.0"
   }
 }
