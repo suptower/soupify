@@ -3,10 +3,10 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('volume')
 		.setDescription('Set volume of bot (has to be between 0 and 100')
-        .addIntegerOption(option => {
+        .addIntegerOption(option => 
             option.setName('percent')
-                .setRequired(true);
-        }),
+                .setDescription('New volume value.')
+                .setRequired(true)),
 	async execute(interaction, distube) {
         await interaction.deferReply();
         const queue = distube.getQueue(interaction.guild);
@@ -22,6 +22,6 @@ module.exports = {
                 return interaction.editReply("Your percentage needs to be a number between 0 and 100.");
             }
         }
-        return interaction.editReply("⏸️   Player paused.");
+        return interaction.editReply("🔊   Volume set to `"+newVol+"` percent.");
 	},
 };
