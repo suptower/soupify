@@ -25,7 +25,7 @@ module.exports = {
             member: interaction.member,
             textChannel: interaction.channel,
         });
-        queue.textChannel.send({embeds: [InfoEmbed]});
-        return await interaction.editReply("<:essentials:921394784915050516>   Successfully added `APACHE BLEIBT GLEICH` to the queue.");
+        interactrion.channel.send({embeds: [InfoEmbed]});
+        return await interaction.editReply("<:essentials:921394784915050516>   Successfully added `ESSENTIALS 2010` to the queue.");
 	},
 };

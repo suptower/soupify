@@ -25,7 +25,7 @@ module.exports = {
             member: interaction.member,
             textChannel: interaction.channel,
         });
-        queue.textChannel.send({embeds: [InfoEmbed]});
+        interaction.channel.send({embeds: [InfoEmbed]});
         return await interaction.editReply("<:apache207:921394699456102410>   Successfully added `APACHE BLEIBT GLEICH` to the queue.");
 	},
 };
