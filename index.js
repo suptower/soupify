@@ -64,11 +64,12 @@ distube.on("finish", (queue) => {
 			clearInterval(firstInterval);
 		}
 	}, 2000);
-	console.log("Wird aufgerufen");
+	queue.textChannel.send("The bot has left the channel due to inactivity.");
 });
 
 client.once('ready', () => {
 	console.log('[soupify] Ready!');
+	client.user.setPresence({activities: [{type: 'LISTENING', name: '/play'}], status: 'online'});
 });
 
 client.on('interactionCreate', async interaction => {
