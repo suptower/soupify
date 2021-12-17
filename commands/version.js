@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const { MessageEmbed } = require('discord');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('version')
@@ -16,7 +17,7 @@ module.exports = {
             { name: 'Repository', value: 'https://github.com/suptower/soupify' },
         )
         .setTimestamp()
-        .setFooter('Version 1.0.3 | Updated: 17th of December, 2021');
+        .setFooter('Version 1.0.4 | Updated: 17th of December, 2021');
     await interaction.editReply({embeds: [InfoEmbed]});
 	},
 };
