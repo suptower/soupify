@@ -12,7 +12,7 @@ module.exports = {
         const InfoEmbed = new MessageEmbed()
         .setColor('#1db954')
         .setTitle("ESSENTIALS 2010")
-        .setThumbnail('https://i.imgur.com/CrdWQZh.jpg')
+        .setThumbnail('https://i.imgur.com/N1mTQpR.png')
         .setDescription('A playlist by suptower, honoring the best of the past decade.')
         .addFields(
             { name: 'Author', value: 'https://spoti.fi/3yz6Wdg' },
