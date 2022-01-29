@@ -4,11 +4,10 @@ const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const DisTube = require('distube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
 const { SpotifyPlugin } = require('@distube/spotify');
-const { default: dist } = require('discord.js/node_modules/@discordjs/collection');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 
-var idle = 0;
+let idle = 0;
 
 client.commands = new Collection();
 
@@ -30,38 +29,44 @@ const distube = new DisTube.default(client, {
 	plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
 });
 
-distube.on("playSong", (queue,song) => {
+distube.on('playSong', (queue, song) => {
 	idle = 0;
 	const playEmbed = new MessageEmbed()
 		.setColor('#1db954')
-		.setTitle("▶️   Now playing")
+		.setTitle('▶️   Now playing')
 		.addFields(
-			{ name: 'Title', value: `${song.name}`, inline: true},
-			{ name: 'Duration', value: `${song.formattedDuration}`, inline: true},
-		)
-	queue.textChannel.send({embeds: [playEmbed]});
+			{ name: 'Title', value: `${song.name}`, inline: true },
+			{ name: 'Duration', value: `${song.formattedDuration}`, inline: true },
+		);
+	queue.textChannel.send({ embeds: [playEmbed] });
 });
 
-distube.on("addSong", (queue, song) => {
+distube.on('addSong', (queue, song) => {
 	idle = 0;
 	queue.textChannel.send(`🆕   Added \`${song.name}\` - \`(${song.formattedDuration})\` to the queue (requested by \`${song.member.displayName}\`)`);
 });
 
-distube.on("addList", (queue, list) => {
+distube.on('addList', (queue, list) => {
 	idle = 0;
-	queue.textChannel.send(`🆕   Added playlist (${list.songs.length} songs) to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
+	if (list.songs.length == 1) {
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} song]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
+	}
+	else {
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} songs]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
+	}
+
 });
 
-distube.on("finish", (queue) => {
+distube.on('finish', (queue) => {
 	idle++;
-	firstInterval = setInterval(function () {
+	const firstInterval = setInterval(function() {
 		if (idle == 0) {
 			clearInterval(firstInterval);
 		}
 		idle++;
 		console.log(idle);
 		if (idle == 20) {
-			queue.textChannel.send("The bot has left the channel due to inactivity.");
+			queue.textChannel.send('The bot has left the channel due to inactivity.');
 			queue.voices.get(queue.textChannel).leave();
 			clearInterval(firstInterval);
 		}
@@ -70,19 +75,20 @@ distube.on("finish", (queue) => {
 
 client.once('ready', () => {
 	console.log('[soupify] Ready!');
-	client.user.setPresence({activities: [{type: 'LISTENING', name: '/play'}], status: 'online'});
+	client.user.setPresence({ activities: [{ type: 'LISTENING', name: '/play' }], status: 'online' });
 });
 
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
-    const command = client.commands.get(interaction.commandName);
+	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
 
 	try {
-		await command.execute(interaction,distube);
-	} catch (error) {
+		await command.execute(interaction, distube);
+	}
+	catch (error) {
 		console.error(error);
 		await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}

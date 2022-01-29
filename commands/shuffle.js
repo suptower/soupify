@@ -4,8 +4,8 @@ module.exports = {
 		.setName('shuffle')
 		.setDescription('Shuffle songs in queue.'),
 	async execute(interaction, distube) {
-        await interaction.deferReply();
-        distube.shuffle(interaction.guild);
-        return interaction.editReply("🔀   Queue shuffled.");
+		await interaction.deferReply();
+		distube.shuffle(interaction.guild);
+		return interaction.editReply('🔀   Queue shuffled.');
 	},
 };

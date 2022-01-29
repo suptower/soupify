@@ -4,14 +4,14 @@ module.exports = {
 		.setName('skip')
 		.setDescription('Skip the current song'),
 	async execute(interaction, distube) {
-        await interaction.deferReply();
+		await interaction.deferReply();
 		const queue = distube.getQueue(interaction);
 		if (queue.songs.length > 1) {
 			distube.skip(interaction.guild);
 		}
 		else {
-			return interaction.editReply("Cannot skip last song of queue.");
+			return interaction.editReply('Cannot skip last song of queue.');
 		}
-        return interaction.editReply("⏭️   Song skipped.");
+		return interaction.editReply('⏭️   Song skipped.');
 	},
 };
