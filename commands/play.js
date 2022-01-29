@@ -27,7 +27,7 @@ module.exports = {
         const queue = distube.getQueue(interaction.guild);
         if (queue) {
             if (inst) {
-                distube.playVoiceChannel(vc,songString,{
+                distube.play(vc,songString,{
                     member: interaction.member,
                     textChannel: interaction.channel,
                     skip: true,
@@ -36,20 +36,20 @@ module.exports = {
             else {
                 if (!(wishPos == null)) {
                     if (wishPos == 0) {
-                        distube.playVoiceChannel(vc,songString,{
+                        distube.play(vc,songString,{
                             member: interaction.member,
                             textChannel: interaction.channel,
                             skip: true,
                         })
                     }
                     else if (wishPos >= queue.songs.length) {
-                        distube.playVoiceChannel(vc,songString,{
+                        distube.play(vc,songString,{
                             member: interaction.member,
                             textChannel: interaction.channel,
                         });
                     }
                     else if (wishPos < queue.songs.length) {
-                        await distube.playVoiceChannel(vc,songString,{
+                        await distube.play(vc,songString,{
                             member: interaction.member,
                             textChannel: interaction.channel,
                         });
@@ -59,7 +59,7 @@ module.exports = {
                     }
                 }
                 else {
-                    distube.playVoiceChannel(vc,songString,{
+                    distube.play(vc,songString,{
                         member: interaction.member,
                         textChannel: interaction.channel,
                     });
@@ -67,7 +67,7 @@ module.exports = {
             }
         }
         else {
-            distube.playVoiceChannel(vc,songString,{
+            distube.play(vc,songString,{
                 member: interaction.member,
                 textChannel: interaction.channel,
             });

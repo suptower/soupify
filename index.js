@@ -48,7 +48,7 @@ distube.on("addSong", (queue, song) => {
 
 distube.on("addList", (queue, list) => {
 	idle = 0;
-	queue.textChannel.send(`🆕   Added playlist to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
+	queue.textChannel.send(`🆕   Added playlist (${list.songs.length} songs) to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
 });
 
 distube.on("finish", (queue) => {
@@ -60,11 +60,11 @@ distube.on("finish", (queue) => {
 		idle++;
 		console.log(idle);
 		if (idle == 20) {
+			queue.textChannel.send("The bot has left the channel due to inactivity.");
 			queue.voices.get(queue.textChannel).leave();
 			clearInterval(firstInterval);
 		}
 	}, 2000);
-	queue.textChannel.send("The bot has left the channel due to inactivity.");
 });
 
 client.once('ready', () => {

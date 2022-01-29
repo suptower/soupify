@@ -21,7 +21,7 @@ module.exports = {
         const vc = interaction.member.voice.channel;
         const songString = "https://open.spotify.com/playlist/7x1xrBl5lVg63ppvEaxdrb?si=8e11c61e50134ad8";
         const queue = distube.getQueue(interaction.guild);
-        distube.playVoiceChannel(vc,songString,{
+        distube.play(vc,songString,{
             member: interaction.member,
             textChannel: interaction.channel,
         });

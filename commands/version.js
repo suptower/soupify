@@ -9,7 +9,7 @@ module.exports = {
         const InfoEmbed = new MessageEmbed()
         .setColor('#1db954')
         .setTitle("Information")
-        .setAuthor('soupify by suptower', 'https://i.imgur.com/eB4PoaU.png')
+        .setAuthor({ name: 'soupify by suptower', iconURL: 'https://i.imgur.com/eB4PoaU.png'})
         .setThumbnail('https://i.imgur.com/8hL40D0.png')
         .setDescription('Discord music bot powered by soupBot, provided by suptower.')
         .addFields(
@@ -17,7 +17,7 @@ module.exports = {
             { name: 'Repository', value: 'https://github.com/suptower/soupify' },
         )
         .setTimestamp()
-        .setFooter('Version 1.0.10 | Updated: 16th of January, 2022');
+        .setFooter({ text: 'Version 1.0.11 | Updated: 29th of January, 2022'});
     await interaction.editReply({embeds: [InfoEmbed]});
 	},
 };
