@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('volume')
-		.setDescription('Set volume of bot (has to be between 0 and 100')
+		.setDescription('Set volume of bot (has to be between 0 and 100)')
 		.addIntegerOption(option =>
 			option.setName('percent')
 				.setDescription('New volume value.')

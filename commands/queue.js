@@ -80,7 +80,7 @@ module.exports = {
 			let offset = 0;
 			let msgId = 0;
 			for (let i = 0; (i < 10 && i < queue.songs.length); i++) {
-				infoBuffer += (i + offset) + ' - ' + queue.songs[i].name + '\n';
+				infoBuffer += (i + offset) + ' - [' + queue.songs[i].formattedDuration + '] - ' + queue.songs[i].name + '\n';
 			}
 			if (queue.songs.length > 10) {
 				await interaction.channel.send({ content: '```------------------------------ 📻   CURRENT QUEUE ------------------------------\n\n' + infoBuffer + '\n------------------------------ 📻   PAGE (' + ((offset / 10) + 1) + '/' + parseInt(((queue.songs.length / 10) + 1)) + ')   ------------------------------```', components: [row0] }).then(message => {
@@ -102,7 +102,7 @@ module.exports = {
 					infoBuffer = '';
 					for (let x = 0; x < 10; x++) {
 						if (x + offset < queue.songs.length && x + offset >= 0) {
-							infoBuffer += (x + offset) + ' - ' + queue.songs[x + offset].name + '\n';
+							infoBuffer += (x + offset) + ' - [' + queue.songs[i].formattedDuration + '] - ' + queue.songs[x + offset].name + '\n';
 						}
 					}
 					if (offset + 10 >= queue.songs.length) {
@@ -118,7 +118,7 @@ module.exports = {
 					infoBuffer = '';
 					for (let x = 0; x < 10; x++) {
 						if (x + offset < queue.songs.length && x + offset >= 0) {
-							infoBuffer += (x + offset) + ' - ' + queue.songs[x + offset].name + '\n';
+							infoBuffer += (x + offset) + ' - [' + queue.songs[i].formattedDuration + '] - ' + queue.songs[x + offset].name + '\n';
 						}
 					}
 					if (offset == 0) {
