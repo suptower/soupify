@@ -2,14 +2,9 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('banger')
-		.setDescription('Plays a random banger song.')
-		.addIntegerOption(option =>
-			option.setName('amount')
-				.setDescription('Amount of songs to add (minimum 1 maximum 44)')
-				.setRequired(false)),
+		.setDescription('Plays a random banger song.'),
 	async execute(interaction, distube) {
 		await interaction.deferReply();
-		const amount = interaction.options.getInteger('amount');
 		/* BANGERS
 			0 - Swedish House Mafia - Lifetime
 			1 - G-Eazy - Me, Myself & I
@@ -75,32 +70,13 @@ module.exports = {
 			'https://open.spotify.com/track/5HCyWlXZPP0y6Gqq8TgA20?si=3497c49d4d1e4a57', 'https://open.spotify.com/track/27NovPIUIRrOZoCHxABJwK?si=69383c93e408450c', 'https://open.spotify.com/track/5XRHGXut00SrJUFmcn2lQF?si=f35c2ec21afa4b10',
 			'https://open.spotify.com/track/3Fcfwhm8oRrBvBZ8KGhtea?si=1a4ba90e80f7487b', 'https://open.spotify.com/track/5TbzAWWc5eJaANpA9kfGCd?si=9eec993bbf864f98', 'https://open.spotify.com/track/4kLLWz7srcuLKA7Et40PQR?si=81dbda2c23974155',
 			'https://open.spotify.com/track/3H7ihDc1dqLriiWXwsc2po?si=be2eb2001e7f4db3'];
-		if (amount == null || amount == 1) {
-			// play only one
-			const rand = Math.floor(Math.random() * (bangers.length));
-			const songString = bangers[rand];
-			distube.play(vc, songString, {
-				member: interaction.member,
-				textChannel: interaction.channel,
-			});
-			return interaction.editReply('💥   Banger added.');
-		}
-		else if (amount > 1 && amount < 45) {
-			// add several
-			for (let i = 0; i < amount; i++) {
-				const rand = Math.floor(Math.random() * (bangers.length));
-				const songString = bangers[rand];
-				bangers.splice(rand, 1);
-				distube.play(vc, songString, {
-					member: interaction.member,
-					textChannel: interaction.channel,
-				});
-			}
-			return interaction.editReply('💥   Bangers added.');
-		}
-		else {
-			// wrong amount
-			return interaction.editReply('❌   Only values between 1 and 44 are allowed.');
-		}
+
+		const rand = Math.floor(Math.random() * (bangers.length));
+		const songString = bangers[rand];
+		distube.play(vc, songString, {
+			member: interaction.member,
+			textChannel: interaction.channel,
+		});
+		return interaction.editReply('💥   Banger added.');
 	},
 };
