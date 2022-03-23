@@ -1,6 +1,6 @@
 {
   "name": "soupify",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Discord music bot powered by soup, provided by suptower.",
   "main": "./index.js",
   "scripts": {
@@ -22,11 +22,13 @@
     "discord-api-types": "^0.24.0",
     "discord.js": "^13.3.1",
     "distube": "^3.0.4",
-    "eslint": "^8.8.0",
     "ffmpeg-static": "^4.4.0",
     "libsodium-wrappers": "^0.7.9"
   },
   "engines": {
     "node": "16.13.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.11.0"
   }
 }
