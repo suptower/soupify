@@ -51,7 +51,11 @@ module.exports = {
 			42 - John Newman - Love Me Again
 			43 - Black Eyed Peas - I Gotta Feeling
 			44 - Topic - Breaking Me
-
+			45 - Rag'n'Bone Man - Human
+			46 - G-Eazy - I Mean It
+			47 - One Republic - Counting Stars
+			48 - One Republic - Secrets
+			49 - ZAYN, Sia - Dusk Till Dawn
 		*/
 		const vc = interaction.member.voice.channel;
 		const bangers = ['https://open.spotify.com/track/3zQpGaH50HeMjxurMZVF6q?si=b8c6bac389cc4296', 'https://open.spotify.com/track/40YcuQysJ0KlGQTeGUosTC?si=11f7ce73ef2f47d4', 'https://open.spotify.com/track/7p7pzSVr2zovan3m1m5hFm?si=4036c3befbfc4703',
@@ -69,7 +73,8 @@ module.exports = {
 			'https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b?si=69a4d155a9b44bf9', 'https://open.spotify.com/track/24Yi9hE78yPEbZ4kxyoXAI?si=53707b2adfcc43a1', 'https://open.spotify.com/track/5QO79kh1waicV47BqGRL3g?si=bb8e119f2d2d48f1',
 			'https://open.spotify.com/track/5HCyWlXZPP0y6Gqq8TgA20?si=3497c49d4d1e4a57', 'https://open.spotify.com/track/27NovPIUIRrOZoCHxABJwK?si=69383c93e408450c', 'https://open.spotify.com/track/5XRHGXut00SrJUFmcn2lQF?si=f35c2ec21afa4b10',
 			'https://open.spotify.com/track/3Fcfwhm8oRrBvBZ8KGhtea?si=1a4ba90e80f7487b', 'https://open.spotify.com/track/5TbzAWWc5eJaANpA9kfGCd?si=9eec993bbf864f98', 'https://open.spotify.com/track/4kLLWz7srcuLKA7Et40PQR?si=81dbda2c23974155',
-			'https://open.spotify.com/track/3H7ihDc1dqLriiWXwsc2po?si=be2eb2001e7f4db3'];
+			'https://open.spotify.com/track/3H7ihDc1dqLriiWXwsc2po?si=be2eb2001e7f4db3', 'https://open.spotify.com/track/5LLRo6dCGxg4PZmtSqNzrZ?si=085c88b2fd6f4dff', 'https://open.spotify.com/track/6jmTHeoWvBaSrwWttr8Xvu?si=e3b272d918ae49f1',
+			'https://open.spotify.com/track/2tpWsVSb9UEmDRxAl1zhX1?si=07aa851b65c94381', 'https://open.spotify.com/track/1NhPKVLsHhFUHIOZ32QnS2?si=8ad80bf921044347', 'https://open.spotify.com/track/1j4kHkkpqZRBwE0A4CN4Yv?si=e5a1da0a206540c4'];
 
 		const rand = Math.floor(Math.random() * (bangers.length));
 		const songString = bangers[rand];
