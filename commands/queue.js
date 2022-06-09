@@ -102,7 +102,7 @@ module.exports = {
 					infoBuffer = '';
 					for (let x = 0; x < 10; x++) {
 						if (x + offset < queue.songs.length && x + offset >= 0) {
-							infoBuffer += (x + offset) + ' - [' + queue.songs[i].formattedDuration + '] - ' + queue.songs[x + offset].name + '\n';
+							infoBuffer += (x + offset) + ' - [' + queue.songs[x + offset].formattedDuration + '] - ' + queue.songs[x + offset].name + '\n';
 						}
 					}
 					if (offset + 10 >= queue.songs.length) {
@@ -118,7 +118,7 @@ module.exports = {
 					infoBuffer = '';
 					for (let x = 0; x < 10; x++) {
 						if (x + offset < queue.songs.length && x + offset >= 0) {
-							infoBuffer += (x + offset) + ' - [' + queue.songs[i].formattedDuration + '] - ' + queue.songs[x + offset].name + '\n';
+							infoBuffer += (x + offset) + ' - [' + queue.songs[x + offset].formattedDuration + '] - ' + queue.songs[x + offset].name + '\n';
 						}
 					}
 					if (offset == 0) {
