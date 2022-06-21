@@ -83,17 +83,17 @@ client.once('ready', () => {
 	const guilds = client.guilds.cache;
 	for (let i = 0; i < guilds.size; i++) {
 		// CHECK FOR BOT CHANNEL
-		if (guilds[i].available) {
+		if (guilds.at(i).available) {
 			const channels = guilds.channels.cache;
 			for (let j = 0; j < channels.size; j++) {
-				if (channels[j].type == 'GUILD_TEXT' && channels[j].name == 'bot') {
+				if (channels.at(j).type == 'GUILD_TEXT' && channels.at(j).name == 'bot') {
 					const embed = new MessageEmbed()
 						.setColor('#1db954')
 						.setTitle('🆙   Update')
 						.addFields(
 							{ name: 'Version 1.0.28', value: 'See more: https://github.com/suptower/soupify' },
 						);
-					channels[j].send({ embeds: [embed] });
+					channels.at(j).send({ embeds: [embed] });
 					break;
 				}
 			}
