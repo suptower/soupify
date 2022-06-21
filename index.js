@@ -84,16 +84,16 @@ client.once('ready', () => {
 	for (let i = 0; i < guilds.size; i++) {
 		// CHECK FOR BOT CHANNEL
 		if (guilds[i].available) {
-			const channels = guilds.channels.cache
+			const channels = guilds.channels.cache;
 			for (let j = 0; j < channels.size; j++) {
-				if (channels[j].type == GUILD_TEXT && channels[j].name == "bot") {
+				if (channels[j].type == 'GUILD_TEXT' && channels[j].name == 'bot') {
 					const embed = new MessageEmbed()
-					.setColor('#1db954')
-					.setTitle('🆙   Update')
-					.addFields(
-						{ name: 'Version 1.0.27', value: 'See more: https://github.com/suptower/soupify'},
-					);
-					channels[j].send({ embeds: [embed]});
+						.setColor('#1db954')
+						.setTitle('🆙   Update')
+						.addFields(
+							{ name: 'Version 1.0.28', value: 'See more: https://github.com/suptower/soupify' },
+						);
+					channels[j].send({ embeds: [embed] });
 					break;
 				}
 			}
