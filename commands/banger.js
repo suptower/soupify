@@ -2,9 +2,13 @@ const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('banger')
-		.setDescription('Plays a random banger song.'),
+		.setDescription('Plays a random banger song.')
+		.addIntegerOption(option =>
+			option.setName('amount')
+			.setDescription('Create a playlist of bangers by specifying the amount of songs you want to add.')),
 	async execute(interaction, distube) {
 		await interaction.deferReply();
+		const amount = interaction.options.getInteger('amount');
 		/* BANGERS
 			0 - Swedish House Mafia - Lifetime
 			1 - G-Eazy - Me, Myself & I
@@ -76,12 +80,29 @@ module.exports = {
 			'https://open.spotify.com/track/3H7ihDc1dqLriiWXwsc2po?si=be2eb2001e7f4db3', 'https://open.spotify.com/track/5LLRo6dCGxg4PZmtSqNzrZ?si=085c88b2fd6f4dff', 'https://open.spotify.com/track/6jmTHeoWvBaSrwWttr8Xvu?si=e3b272d918ae49f1',
 			'https://open.spotify.com/track/2tpWsVSb9UEmDRxAl1zhX1?si=07aa851b65c94381', 'https://open.spotify.com/track/1NhPKVLsHhFUHIOZ32QnS2?si=8ad80bf921044347', 'https://open.spotify.com/track/1j4kHkkpqZRBwE0A4CN4Yv?si=e5a1da0a206540c4'];
 
-		const rand = Math.floor(Math.random() * (bangers.length));
-		const songString = bangers[rand];
-		distube.play(vc, songString, {
-			member: interaction.member,
-			textChannel: interaction.channel,
-		});
-		return interaction.editReply('💥   Banger added.');
+		if (amount == null) {
+			const rand = Math.floor(Math.random() * (bangers.length));
+			const songString = bangers[rand];
+			distube.play(vc, songString, {
+				member: interaction.member,
+				textChannel: interaction.channel,
+			});
+			return interaction.editReply('💥   Banger added.');
+		}
+		else {
+			let songArray = [];
+			for (let i = 0; i < amount; i++) {
+				const rand = Math.floor(Math.random() * (bangers.length));
+				songArray.push(bangers[rand]);
+			}
+			const playlist = distube.createCustomPlaylist(songArray, {
+				member: interaction.member
+			});
+			distube.play(vc, playlist, {
+				member: interaction.member,
+				textChannel: interaction.channel,
+			});
+			return interaction.editReply('💥   Bangers added.');
+		}
 	},
 };
