@@ -84,7 +84,7 @@ client.once('ready', () => {
 	for (let i = 0; i < guilds.size; i++) {
 		// CHECK FOR BOT CHANNEL
 		if (guilds.at(i).available) {
-			const channels = guilds.channels.cache;
+			const channels = guilds.at(i).channels.cache;
 			for (let j = 0; j < channels.size; j++) {
 				if (channels.at(j).type == 'GUILD_TEXT' && channels.at(j).name == 'bot') {
 					const embed = new MessageEmbed()
