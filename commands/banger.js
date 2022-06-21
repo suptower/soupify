@@ -96,13 +96,12 @@ module.exports = {
 				const rand = Math.floor(Math.random() * (bangers.length));
 				songArray.push(bangers[rand]);
 			}
-			const playlist = distube.createCustomPlaylist(songArray, {
+			distube.createCustomPlaylist(songArray, {
 				member: interaction.member,
-			});
-			distube.play(vc, playlist, {
+			}).then(playlist => distube.play(vc, playlist, {
 				member: interaction.member,
 				textChannel: interaction.channel,
-			});
+			}));
 			return interaction.editReply('💥   Bangers added.');
 		}
 	},
