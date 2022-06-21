@@ -5,7 +5,8 @@ module.exports = {
 		.setDescription('Plays a random banger song.')
 		.addIntegerOption(option =>
 			option.setName('amount')
-			.setDescription('Create a playlist of bangers by specifying the amount of songs you want to add.')),
+				.setDescription('Create a playlist of bangers by specifying the amount of songs you want to add.')
+				.setRequired(false)),
 	async execute(interaction, distube) {
 		await interaction.deferReply();
 		const amount = interaction.options.getInteger('amount');
@@ -90,13 +91,13 @@ module.exports = {
 			return interaction.editReply('💥   Banger added.');
 		}
 		else {
-			let songArray = [];
+			const songArray = [];
 			for (let i = 0; i < amount; i++) {
 				const rand = Math.floor(Math.random() * (bangers.length));
 				songArray.push(bangers[rand]);
 			}
 			const playlist = distube.createCustomPlaylist(songArray, {
-				member: interaction.member
+				member: interaction.member,
 			});
 			distube.play(vc, playlist, {
 				member: interaction.member,
