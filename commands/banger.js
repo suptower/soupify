@@ -95,10 +95,9 @@ module.exports = {
 			const songArray = [];
 			for (let i = 0; i < amount; i++) {
 				const rand = Math.floor(Math.random() * (bangers.length));
-				distube.search(bangers[rand], {
-					limit: 1,
-				}).then(res => songArray.push(res[0]));
+				distube.search(bangers[rand]).then(res => songArray.push(res[0]));
 			}
+			console.log('songArray has ' + songArray.length + ' entries.');
 			distube.createCustomPlaylist(songArray, {
 				member: interaction.member,
 			}).then(playlist => distube.play(vc, playlist, {
