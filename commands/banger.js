@@ -94,7 +94,9 @@ module.exports = {
 			const songArray = [];
 			for (let i = 0; i < amount; i++) {
 				const rand = Math.floor(Math.random() * (bangers.length));
-				songArray.push(bangers[rand]);
+				distube.search(bangers[rand], {
+					limit: 1,
+				}).then(res => songArray.push(res[0]));
 			}
 			distube.createCustomPlaylist(songArray, {
 				member: interaction.member,
