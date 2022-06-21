@@ -91,7 +91,7 @@ client.once('ready', () => {
 						.setColor('#1db954')
 						.setTitle('🆙   Update')
 						.addFields(
-							{ name: 'Version 1.0.30', value: 'See more: https://github.com/suptower/soupify' },
+							{ name: 'Version 1.0.31', value: 'See more: https://github.com/suptower/soupify' },
 						);
 					channels.at(j).send({ embeds: [embed] });
 					break;

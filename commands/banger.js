@@ -10,6 +10,7 @@ module.exports = {
 	async execute(interaction, distube) {
 		await interaction.deferReply();
 		const amount = interaction.options.getInteger('amount');
+		let reply = '';
 		/* BANGERS
 			0 - Swedish House Mafia - Lifetime
 			1 - G-Eazy - Me, Myself & I
@@ -88,7 +89,7 @@ module.exports = {
 				member: interaction.member,
 				textChannel: interaction.channel,
 			});
-			return interaction.editReply('💥   Banger added.');
+			reply = '💥   Banger added.';
 		}
 		else {
 			const songArray = [];
@@ -104,7 +105,8 @@ module.exports = {
 				member: interaction.member,
 				textChannel: interaction.channel,
 			}));
-			return interaction.editReply('💥   Bangers added.');
+			reply = '💥   ' + amount + 'Bangers added.';
 		}
+		return await interaction.editReply(reply);
 	},
 };
