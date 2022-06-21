@@ -105,14 +105,13 @@ module.exports = {
 				const rand = Math.floor(Math.random() * (bangers.length));
 				songArray.push(bangers[rand]);
 			}
-			console.log('songArray has ' + songArray.length + ' entries.');
 			distube.createCustomPlaylist(songArray, {
 				member: interaction.member,
 			}).then(playlist => distube.play(vc, playlist, {
 				member: interaction.member,
 				textChannel: interaction.channel,
 			}));
-			reply = '💥   ' + amount + 'Bangers added.';
+			reply = '💥   ' + amount + ' Bangers added.';
 		}
 		return await interaction.editReply(reply);
 	},
