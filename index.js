@@ -51,10 +51,10 @@ distube.on('addSong', (queue, song) => {
 distube.on('addList', (queue, list) => {
 	idle = 0;
 	if (list.songs.length == 1) {
-		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length + 1} song]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} song]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
 	}
 	else {
-		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length + 1} songs]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} songs]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
 	}
 
 });
@@ -91,7 +91,7 @@ client.once('ready', () => {
 						.setColor('#1db954')
 						.setTitle('🆙   Update')
 						.addFields(
-							{ name: 'Version 1.0.36', value: 'See more: https://github.com/suptower/soupify' },
+							{ name: 'Version 1.0.37', value: 'See more: https://github.com/suptower/soupify' },
 						);
 					channels.at(j).send({ embeds: [embed] });
 					break;
