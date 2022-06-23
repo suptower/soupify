@@ -4,7 +4,8 @@ const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const DisTube = require('distube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
 const { SpotifyPlugin } = require('@distube/spotify');
-const { Version } = require('root-require')('./package.json').version;
+const json = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+const Version = json.version;
 
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });

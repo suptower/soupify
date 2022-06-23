@@ -1,6 +1,6 @@
 {
   "name": "soupify",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "Discord music bot powered by soup, provided by suptower.",
   "main": "./index.js",
   "scripts": {
