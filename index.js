@@ -4,6 +4,7 @@ const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const DisTube = require('distube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
 const { SpotifyPlugin } = require('@distube/spotify');
+const { Version } = require('./package.json').version;
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 
@@ -91,7 +92,7 @@ client.once('ready', () => {
 						.setColor('#1db954')
 						.setTitle('🆙   Update')
 						.addFields(
-							{ name: 'Version 1.0.37', value: 'See more: https://github.com/suptower/soupify' },
+							{ name: 'Version ' + Version, value: 'See more: https://github.com/suptower/soupify' },
 						);
 					channels.at(j).send({ embeds: [embed] });
 					break;
