@@ -48,16 +48,16 @@ distube.on('playSong', (queue, song) => {
 
 distube.on('addSong', (queue, song) => {
 	idle = 0;
-	queue.textChannel.send(`🆕   Added \`${song.name}\` - \`(${song.formattedDuration})\` to the queue (requested by \`${song.member.displayName}\`) [${song.options.source}]`);
+	queue.textChannel.send(`🆕   Added \`${song.name}\` - \`(${song.formattedDuration})\` to the queue (requested by \`${song.member.displayName}\`) [${song.source}]`);
 });
 
 distube.on('addList', (queue, list) => {
 	idle = 0;
 	if (list.songs.length == 1) {
-		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} song]\` to the queue (requested by \`${list.songs[0].member.displayName}\`) [$list.source]`);
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} song]\` to the queue (requested by \`${list.songs[0].member.displayName}\`) [${list.source}]`);
 	}
 	else {
-		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} songs]\` to the queue (requested by \`${list.songs[0].member.displayName}\`) [$list.source]`);
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} songs]\` to the queue (requested by \`${list.songs[0].member.displayName}\`) [${list.source}]}`);
 	}
 
 });
