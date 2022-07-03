@@ -41,8 +41,8 @@ distube.on('playSong', (queue, song) => {
 		.setTitle('▶️   Now playing')
 		.addFields(
 			{ name: 'Title', value: `${song.name}`, inline: true },
-			{ name: 'Duration', value: `${song.formattedDuration}`, inline: true }
-			{ name: 'Source', value: `${song.streamURL}`},
+			{ name: 'Duration', value: `${song.formattedDuration}`, inline: true },
+			{ name: 'Source', value: `${song.streamURL}` },
 		);
 	queue.textChannel.send({ embeds: [playEmbed] });
 });
