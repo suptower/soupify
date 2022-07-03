@@ -41,23 +41,24 @@ distube.on('playSong', (queue, song) => {
 		.setTitle('▶️   Now playing')
 		.addFields(
 			{ name: 'Title', value: `${song.name}`, inline: true },
-			{ name: 'Duration', value: `${song.formattedDuration}`, inline: true },
+			{ name: 'Duration', value: `${song.formattedDuration}`, inline: true }
+			{ name: 'Source', value: `${song.streamURL}`},
 		);
 	queue.textChannel.send({ embeds: [playEmbed] });
 });
 
 distube.on('addSong', (queue, song) => {
 	idle = 0;
-	queue.textChannel.send(`🆕   Added \`${song.name}\` - \`(${song.formattedDuration})\` to the queue (requested by \`${song.member.displayName}\`) [${song.source}]`);
+	queue.textChannel.send(`🆕   Added \`${song.name}\` - \`(${song.formattedDuration})\` to the queue (requested by \`${song.member.displayName}\`)`);
 });
 
 distube.on('addList', (queue, list) => {
 	idle = 0;
 	if (list.songs.length == 1) {
-		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} song]\` to the queue (requested by \`${list.songs[0].member.displayName}\`) [${list.source}]`);
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} song]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
 	}
 	else {
-		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} songs]\` to the queue (requested by \`${list.songs[0].member.displayName}\`) [${list.source}]}`);
+		queue.textChannel.send(`🆕   Added playlist \`[${list.songs.length} songs]\` to the queue (requested by \`${list.songs[0].member.displayName}\`)`);
 	}
 
 });
