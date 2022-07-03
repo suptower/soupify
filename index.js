@@ -42,7 +42,7 @@ distube.on('playSong', (queue, song) => {
 		.addFields(
 			{ name: 'Title', value: `${song.name}`, inline: true },
 			{ name: 'Duration', value: `${song.formattedDuration}`, inline: true },
-			{ name: 'Source', value: `${song.streamURL}` },
+			{ name: 'Source', value: `${song.url}` },
 		);
 	queue.textChannel.send({ embeds: [playEmbed] });
 });
