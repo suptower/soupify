@@ -30,7 +30,7 @@ module.exports = {
 			return interaction.editReply('⏩   Fast forwarded.');
 		}
 		else {
-			return interaction.editReply('⏪   Fast rewinded.');
+			return interaction.editReply('⏪   Fast rewound.');
 		}
 
 	},
