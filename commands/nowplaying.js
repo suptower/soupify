@@ -34,6 +34,7 @@ module.exports = {
 				{ name: 'Title', value: `${song.name}` },
 				{ name: infoBuffer, value: '\u200B', inline: true },
 				{ name: timeDisplay, value: '\u200B', inline: true },
+				{ name: 'Source', value: `${song.url}` },
 			);
 		return interaction.editReply({ embeds:[nowplayingEmbed] });
 	},
