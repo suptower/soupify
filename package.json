@@ -1,6 +1,6 @@
 {
   "name": "soupify",
-  "version": "1.0.54",
+  "version": "1.0.55",
   "description": "Discord music bot powered by soup, provided by suptower.",
   "main": "./index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@discordjs/builders": "^0.8.2",
-    "@discordjs/opus": "^0.5.3",
+    "@discordjs/opus": "^0.8.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@distube/soundcloud": "^1.0.0",
     "@distube/spotify": "^1.0.0",
