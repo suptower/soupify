@@ -62,6 +62,10 @@ module.exports = {
 			47 - One Republic - Counting Stars
 			48 - One Republic - Secrets
 			49 - ZAYN, Sia - Dusk Till Dawn
+			50 - Alex Johrdal - Til the Lights go out
+			51 - Russ - Pull the Trigger
+			52 - Logic - Ballin
+			53 - Bazanji - Fed Up
 		*/
 		const vc = interaction.member.voice.channel;
 		const bangers = ['https://youtu.be/IEXQS0Idz3k', 'https://youtu.be/K533gW3boIY',
@@ -88,7 +92,9 @@ module.exports = {
 			'https://youtu.be/JWzag7a9afU', 'https://youtu.be/CwdrtwZiQ9E',
 			'https://youtu.be/TLZg0o_HTEA', 'https://youtu.be/kh5snpi8bMk',
 			'https://youtu.be/4MjSoquXAZ4', 'https://youtu.be/4WgWGcED0JQ',
-			'https://youtu.be/1ebW7okoIok', 'https://youtu.be/eNd4tt9raeg'];
+			'https://youtu.be/1ebW7okoIok', 'https://youtu.be/eNd4tt9raeg',
+			'https://youtu.be/FPAhrshC-aA', 'https://youtu.be/Tl9U0qiFQzM',
+			'https://youtu.be/nT04upwfsiI', 'https://youtu.be/9-zK_5gn4_s'];
 
 		if (amount == null) {
 			const rand = Math.floor(Math.random() * (bangers.length));

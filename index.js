@@ -4,9 +4,6 @@ const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const DisTube = require('distube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
 const { SpotifyPlugin } = require('@distube/spotify');
-// const json = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-// const Version = json.version;
-
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_VOICE_STATES, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] });
 
@@ -82,29 +79,6 @@ distube.on('finish', (queue) => {
 client.once('ready', () => {
 	console.log('[soupify] Ready!');
 	client.user.setPresence({ activities: [{ type: 'LISTENING', name: '/play' }], status: 'online' });
-	// UPDATE ANNOUNCEMENT
-	// FETCH GUILDS
-	/*
-	const guilds = client.guilds.cache;
-	for (let i = 0; i < guilds.size; i++) {
-		// CHECK FOR BOT CHANNEL
-		if (guilds.at(i).available) {
-			const channels = guilds.at(i).channels.cache;
-			for (let j = 0; j < channels.size; j++) {
-				if (channels.at(j).type == 'GUILD_TEXT' && channels.at(j).name == 'bot') {
-					const embed = new MessageEmbed()
-						.setColor('#1db954')
-						.setTitle('🆙   Update')
-						.addFields(
-							{ name: 'Version ' + Version, value: 'See more: https://github.com/suptower/soupify' },
-						);
-					channels.at(j).send({ embeds: [embed] });
-					break;
-				}
-			}
-		}
-	}
-	*/
 });
 
 client.on('interactionCreate', async interaction => {
