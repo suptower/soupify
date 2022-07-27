@@ -67,7 +67,7 @@ distube.on('finish', (queue) => {
 			clearInterval(firstInterval);
 		}
 		idle++;
-		console.log(idle);
+		console.log('[soupify] idle for: ' + idle);
 		if (idle == 20) {
 			queue.textChannel.send('The bot has left the channel due to inactivity.');
 			queue.voices.get(queue.textChannel).leave();

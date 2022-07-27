@@ -107,17 +107,29 @@ module.exports = {
 		}
 		else {
 			const songArray = [];
-			for (let i = 0; i < amount; i++) {
-				const rand = Math.floor(Math.random() * (bangers.length));
-				songArray.push(bangers[rand]);
+			if (amount < bangers.length) {
+				for (let i = 0; i < amount; i++) {
+					const rand = Math.floor(Math.random() * (bangers.length));
+					songArray.push(bangers[rand]);
+					bangers.splice(rand, 1);
+				}
+				distube.createCustomPlaylist(songArray, {
+					member: interaction.member,
+				}).then(playlist => distube.play(vc, playlist, {
+					member: interaction.member,
+					textChannel: interaction.channel,
+				}));
+				reply = '💥   ' + amount + ' Bangers added.';
 			}
-			distube.createCustomPlaylist(songArray, {
-				member: interaction.member,
-			}).then(playlist => distube.play(vc, playlist, {
-				member: interaction.member,
-				textChannel: interaction.channel,
-			}));
-			reply = '💥   ' + amount + ' Bangers added.';
+			else {
+				distube.createCustomPlaylist(bangers, {
+					member: interaction.member,
+				}).then(playlist => distube.play(vc, playlist, {
+					member: interaction.member,
+					textChannel: interaction.channel,
+				}));
+				reply = '💥   All bangers added.';
+			}
 		}
 		return await interaction.editReply(reply);
 	},
