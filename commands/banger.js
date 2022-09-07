@@ -66,6 +66,8 @@ module.exports = {
 			51 - Russ - Pull the Trigger
 			52 - Logic - Ballin
 			53 - Bazanji - Fed Up
+			54 - Glass Animals - Heat Waves
+			55 - Nathan Dawe x Ella Henderson - 21 Reasons
 		*/
 		const vc = interaction.member.voice.channel;
 		const bangers = ['https://youtu.be/IEXQS0Idz3k', 'https://youtu.be/K533gW3boIY',
@@ -94,7 +96,8 @@ module.exports = {
 			'https://youtu.be/4MjSoquXAZ4', 'https://youtu.be/4WgWGcED0JQ',
 			'https://youtu.be/1ebW7okoIok', 'https://youtu.be/eNd4tt9raeg',
 			'https://youtu.be/FPAhrshC-aA', 'https://youtu.be/Tl9U0qiFQzM',
-			'https://youtu.be/nT04upwfsiI', 'https://youtu.be/9-zK_5gn4_s'];
+			'https://youtu.be/nT04upwfsiI', 'https://youtu.be/9-zK_5gn4_s',
+			'https://youtu.be/WgiWUnJqy3k', 'https://youtu.be/TfbK_sCRapM'];
 
 		if (amount == null) {
 			const rand = Math.floor(Math.random() * (bangers.length));
