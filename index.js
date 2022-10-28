@@ -1,6 +1,5 @@
 // Require the necessary discord.js classes
 const fs = require('fs');
-const keepAlive = require('./server');
 const { Client, Collection, Intents, MessageEmbed } = require('discord.js');
 const DisTube = require('distube');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
@@ -99,5 +98,4 @@ client.on('interactionCreate', async interaction => {
 	}
 });
 
-client.login(process.env['token']);
-keepAlive();
+client.login(process.env.TOKEN);
