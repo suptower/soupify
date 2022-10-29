@@ -11,7 +11,12 @@
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/y/suptower/soupify?style=for-the-badge">
   <img alt="GitHub deployments" src="https://img.shields.io/github/deployments/suptower/soupify/soupify-host1?style=for-the-badge">
 </p>
-
+<p>
+<p align="center">
+  <img alt="CodeQL" src ="https://github.com/suptower/soupify/actions/workflows/codeql-analysis.yml/badge.svg">
+  <img alt="Fly Deploy" src ="https://github.com/suptower/soupify/actions/workflows/main.yml/badge.svg">
+  </p>
+  
 # soupify
 soupify is a Discord music bot featuring support for popular websites such as YouTube, Spotify, Soundcloud and more.
 
@@ -22,8 +27,7 @@ Birthday: 10th of November, 2021
 ## Adding to your server
 You can add the bot to your server [here](https://discord.com/api/oauth2/authorize?client_id=908055328401272842&permissions=8&scope=bot%20applications.commands).
 
-## Deploying
-  [![CodeQL](https://github.com/suptower/soupify/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/suptower/soupify/actions/workflows/codeql-analysis.yml)
+
 
 ## Usage
 The bot can only be used by using slash commands in your server.
