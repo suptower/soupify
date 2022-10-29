@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('discord.js');
-const { MessageActionRow, MessageButton } = require('discord.js');
+const { SlashCommandBuilder, ButtonStyle } = require('discord.js');
+const { ActionRowBuilder, ButtonBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('queue')
@@ -11,68 +11,68 @@ module.exports = {
 			return interaction.editReply('There is no queue.');
 		}
 		else {
-			const row0 = new MessageActionRow()
+			const row0 = new ActionRowBuilder()
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('prev')
 						.setLabel('Previous')
-						.setStyle('DANGER')
+						.setStyle(ButtonStyle.Primary)
 						.setEmoji('⬅️')
 						.setDisabled(true),
 				)
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('next')
 						.setLabel('Next')
-						.setStyle('SUCCESS')
+						.setStyle(ButtonStyle.Success)
 						.setEmoji('➡️'),
 				);
-			const row1 = new MessageActionRow()
+			const row1 = new ActionRowBuilder()
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('prev')
 						.setLabel('Previous')
-						.setStyle('DANGER')
+						.setStyle(ButtonStyle.Danger)
 						.setEmoji('⬅️')
 						.setDisabled(false),
 				)
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('next')
 						.setLabel('Next')
-						.setStyle('SUCCESS')
+						.setStyle(ButtonStyle.Success)
 						.setEmoji('➡️'),
 				);
-			const row2 = new MessageActionRow()
+			const row2 = new ActionRowBuilder()
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('prev')
 						.setLabel('Previous')
-						.setStyle('DANGER')
+						.setStyle(ButtonStyle.Danger)
 						.setEmoji('⬅️'),
 				)
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('next')
 						.setLabel('Next')
-						.setStyle('SUCCESS')
+						.setStyle(ButtonStyle.Success)
 						.setEmoji('➡️')
 						.setDisabled(true),
 				);
-			const row3 = new MessageActionRow()
+			const row3 = new ActionRowBuilder()
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('prev')
 						.setLabel('Previous')
-						.setStyle('DANGER')
+						.setStyle(ButtonStyle.Danger)
 						.setEmoji('⬅️')
 						.setDisabled(true),
 				)
 				.addComponents(
-					new MessageButton()
+					new ButtonBuilder()
 						.setCustomId('next')
 						.setLabel('Next')
-						.setStyle('SUCCESS')
+						.setStyle(ButtonStyle.Success)
 						.setEmoji('➡️')
 						.setDisabled(true),
 				);
