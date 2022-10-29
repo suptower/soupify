@@ -7,9 +7,11 @@ module.exports = {
 			option.setName('mode')
 				.setDescription('Specify your loop mode')
 				.setRequired(true)
-				.addChoice('QUEUE', '2')
-				.addChoice('SONG', '1')
-				.addChoice('OFF', '0')),
+				.addChoices(
+					{ name: 'Queue', value: '1' },
+					{ name: 'Song', value: '2' },
+					{ name: 'Off', value: '3' },
+				)),
 	async execute(interaction, distube) {
 		await interaction.deferReply();
 		const str = interaction.options.getString('mode');
