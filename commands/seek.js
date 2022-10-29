@@ -27,10 +27,10 @@ module.exports = {
 			return interaction.editReply('You are not able to rewind beyond the start of the current song.');
 		}
 		if (toSeek >= 0) {
-			return interaction.editReply('⏩   Fast forwarded.');
+			return interaction.editReply('⏩   Fast forwarded by `' + toSeek + ' seconds`.');
 		}
 		else {
-			return interaction.editReply('⏪   Fast rewound.');
+			return interaction.editReply('⏪   Fast rewound by `' + toSeek + ' seconds`.');
 		}
 
 	},

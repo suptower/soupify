@@ -11,28 +11,32 @@ module.exports = {
 		await interaction.deferReply();
 		const pos = interaction.options.getInteger('position');
 		const queue = distube.getQueue(interaction.guild);
+		let removedSong;
 		if (queue) {
 			if (!(pos == null)) {
 				if (pos == 0) {
 					distube.skip(interaction.guild);
 				}
 				else if (pos > 0 && pos < queue.songs.length) {
+					removedSong = queue.songs[pos].name;
 					queue.songs.splice(pos, 1);
 				}
 				else if (pos >= queue.songs.length) {
-					queue.songs.pop();
+					const s = queue.songs.pop();
+					removedSong = s.name;
 				}
 				else {
 					return interaction.editReply('Your given position is not in accepted range.');
 				}
 			}
 			else {
-				queue.songs.pop();
+				const s = queue.songs.pop();
+				removedSong = s.name;
 			}
 		}
 		else {
 			return interaction.editReply('There is no queue.');
 		}
-		return interaction.editReply('⏏️   Song removed from queue.');
+		return interaction.editReply('⏏️   Song `' + removedSong + '` removed from queue.');
 	},
 };
