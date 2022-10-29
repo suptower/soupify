@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('nowplaying')
@@ -27,7 +27,7 @@ module.exports = {
 			infoBuffer += '▬';
 		}
 		const timeDisplay = '[' + timeCurrentFormatted + '/' + durationFormatted + ']';
-		const nowplayingEmbed = new MessageEmbed()
+		const nowplayingEmbed = new EmbedBuilder()
 			.setColor('#1db954')
 			.setTitle('ℹ️   Currently playing')
 			.addFields(

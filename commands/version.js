@@ -1,6 +1,6 @@
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 const json = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 const Version = json.version;
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
 		.setDescription('Shows bot related information.'),
 	async execute(interaction) {
 		await interaction.deferReply();
-		const InfoEmbed = new MessageEmbed()
+		const InfoEmbed = new EmbedBuilder()
 			.setColor('#1db954')
 			.setTitle('Information')
 			.setAuthor({ name: 'soupify by suptower', iconURL: 'https://i.imgur.com/eB4PoaU.png' })

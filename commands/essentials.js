@@ -1,5 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
-const { MessageEmbed } = require('discord.js');
+const { SlashCommandBuilder } = require('discord.js');
+const { EmbedBuilder } = require('discord.js');
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('essentials')
@@ -9,7 +9,7 @@ module.exports = {
 		if (!interaction.member.voice.channel) {
 			return interaction.editReply('You need to be connected to a voice channel.');
 		}
-		const InfoEmbed = new MessageEmbed()
+		const InfoEmbed = new EmbedBuilder()
 			.setColor('#1db954')
 			.setTitle('ESSENTIALS 2010')
 			.setThumbnail('https://i.imgur.com/N1mTQpR.png')
