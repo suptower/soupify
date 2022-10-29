@@ -17,12 +17,12 @@ module.exports = {
 		const str = interaction.options.getString('mode');
 		const mode = parseInt(str);
 		if (mode == 1) {
-			distube.setRepeatMode(interaction.guild, 1);
-			return interaction.editReply('🔂   Looping current song now.');
-		}
-		else if (mode == 2) {
 			distube.setRepeatMode(interaction.guild, 2);
 			return interaction.editReply('🔂   Looping queue now.');
+		}
+		else if (mode == 2) {
+			distube.setRepeatMode(interaction.guild, 1);
+			return interaction.editReply('🔂   Looping current song now.');
 		}
 		else {
 			distube.setRepeatMode(interaction.guild, 0);
