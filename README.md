@@ -6,7 +6,6 @@
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/suptower/soupify?color=blueviolet&style=for-the-badge">
   <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/suptower/soupify?color=brightgreen&style=for-the-badge">
   <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/suptower/soupify?style=for-the-badge">
-  <img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/suptower/soupify?color=important&style=for-the-badge">
   <img alt="GitHub package.json version" src="https://img.shields.io/github/package-json/v/suptower/soupify?color=red&style=for-the-badge">
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/y/suptower/soupify?style=for-the-badge">
   <img alt="GitHub deployments" src="https://img.shields.io/github/deployments/suptower/soupify/soupify-host1?style=for-the-badge">
@@ -17,9 +16,9 @@
   <img alt="Fly Deploy" src ="https://github.com/suptower/soupify/actions/workflows/main.yml/badge.svg">
   </p>
   
+  
 # soupify
 soupify is a Discord music bot featuring support for popular websites such as YouTube, Spotify, Soundcloud and more.
-
 
 
 Birthday: 10th of November, 2021
@@ -33,4 +32,5 @@ You can add the bot to your server [here](https://discord.com/api/oauth2/authori
 The bot can only be used by using slash commands in your server.
 
 ## Contact
+[](<img alt="Lines of code" src="https://img.shields.io/tokei/lines/github/suptower/soupify?color=important&style=for-the-badge">)
 Discord:  suptower#0554
