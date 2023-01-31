@@ -14,7 +14,7 @@ module.exports = {
 			let tagString = 'Command name - Usage count\n';
 			for (const tag of tagList) {
 				let commandName = tag.get('command');
-				commandName = commandName.padEnd(20, ' ');
+				commandName = commandName.padEnd(12, ' ');
 				tagString += `${commandName} - ${tag.get('usage_count')}\n`;
 			}
 			tagString += '\nTotal commands: ' + tagList.length;
