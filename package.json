@@ -26,6 +26,8 @@
     "express": "^4.18.2",
     "ffmpeg-static": "^4.4.0",
     "libsodium-wrappers": "^0.7.9",
+    "sequelize": "^6.28.0",
+    "sqlite3": "^5.1.4",
     "superagent": "^8.0.3"
   },
   "engines": {
