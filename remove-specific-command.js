@@ -19,7 +19,7 @@ const rest = new REST({ version: '9' }).setToken(token);
 	try {
 		console.log('Started removing application (/) commands.');
 
-		await rest.delete(Routes.applicationCommands(clientId), 'commandID');
+		await rest.delete(Routes.applicationCommands(clientId), commandID);
 
 		console.log('Successfully removed application (/) commands.');
 	}
