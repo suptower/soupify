@@ -112,11 +112,10 @@ client.once(Events.ClientReady, () => {
 			const command = require(`./commands/${file}`);
 			try {
 				const tagName = command.data.name;
-				const tag = await Tags.create({
+				await Tags.create({
 					command: tagName,
 					usage_count: 0,
 				});
-				console.log(`Created tag ${tag.get('command')}`);
 			}
 			catch (e) {
 				console.log(e);
