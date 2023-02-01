@@ -72,6 +72,8 @@ module.exports = {
 			57 - Jack Harlow - First Class
 			58 - The Weeknd - Sacrifice
 			59 - The Weeknd - Moth to a flame
+			60 - Jungle - Busy Earnin
+			61 - Avicii - Hey Brother
 		*/
 		const vc = interaction.member.voice.channel;
 		const bangers = ['https://youtu.be/IEXQS0Idz3k', 'https://youtu.be/K533gW3boIY',
@@ -103,7 +105,8 @@ module.exports = {
 			'https://youtu.be/nT04upwfsiI', 'https://youtu.be/9-zK_5gn4_s',
 			'https://youtu.be/WgiWUnJqy3k', 'https://youtu.be/TfbK_sCRapM',
 			'https://youtu.be/V1Z586zoeeE', 'https://youtu.be/QKW_EEDt2FE',
-			'https://youtu.be/E6zblNbGXA4', 'https://youtu.be/WbzmQcFLPE8'];
+			'https://youtu.be/E6zblNbGXA4', 'https://youtu.be/WbzmQcFLPE8',
+			'https://youtu.be/xkujEpoOjJ8', 'https://youtu.be/YxIiPLVR6NA'];
 
 		if (amount == null) {
 			const rand = Math.floor(Math.random() * (bangers.length));
