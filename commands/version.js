@@ -20,7 +20,7 @@ module.exports = {
 				{ name: 'Repository', value: 'https://github.com/suptower/soupify' },
 			)
 			.setTimestamp()
-			.setFooter({ text: 'Version ' + Version + ' | Updated: 1st of February, 2023' });
+			.setFooter({ text: 'Version ' + Version + ' | Updated: 7th of March, 2023' });
 		await interaction.editReply({ embeds: [InfoEmbed] });
 	},
 };
