@@ -1,7 +1,6 @@
 // Require the necessary discord.js classes
-const Sequelize = require('sequelize');
 const fs = require('fs');
-const { Client, Collection, Events, GatewayIntentBits, EmbedBuilder, Partials } = require('discord.js');
+const { Client, Collection, GatewayIntentBits, EmbedBuilder, Partials } = require('discord.js');
 const DisTube = require('distube');
 const { YtDlpPlugin } = require('@distube/yt-dlp');
 const { SoundCloudPlugin } = require('@distube/soundcloud');
@@ -9,26 +8,6 @@ const { SpotifyPlugin } = require('@distube/spotify');
 const { ActivityType, ChannelType } = require('discord-api-types/v10');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMessageReactions, GatewayIntentBits.DirectMessages, GatewayIntentBits.GuildMembers], partials: [Partials.Channel] });
-
-const sequelize = new Sequelize('database', 'user', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false,
-	// SQLite only
-	storage: 'database.sqlite',
-});
-
-const Tags = sequelize.define('tags', {
-	command: {
-		type: Sequelize.STRING,
-		unique: true,
-	},
-	usage_count: {
-		type: Sequelize.INTEGER,
-		defaultValue: 0,
-		allowNull: false,
-	},
-});
 
 let idle = 0;
 
@@ -105,25 +84,6 @@ client.once('ready', () => {
 	client.user.setPresence({ activities: [{ type: ActivityType.Listening, name: '/play' }], status: 'online' });
 });
 
-client.once(Events.ClientReady, () => {
-	(async () => {
-		await Tags.sync();
-		for (const file of commandFiles) {
-			const command = require(`./commands/${file}`);
-			try {
-				const tagName = command.data.name;
-				await Tags.create({
-					command: tagName,
-					usage_count: 0,
-				});
-			}
-			catch (e) {
-				console.log(e);
-			}
-		}
-	})();
-});
-
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isCommand()) return;
 
@@ -135,32 +95,12 @@ client.on('interactionCreate', async interaction => {
 
 	if (!command) return;
 
-	if (interaction.commandName === 'stats') {
-		try {
-			await command.execute(interaction, Tags);
-		}
-		catch (error) {
-			console.error(error);
-			await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
-		}
+	try {
+		await command.execute(interaction, distube);
 	}
-	else {
-		try {
-			await command.execute(interaction, distube);
-			const tagName = command.data.name;
-			await Tags.findOne({ where: { command: tagName } }).then(tag => {
-				if (tag) {
-					tag.increment('usage_count');
-				}
-				else {
-					console.log('Tag not found.');
-				}
-			});
-		}
-		catch (error) {
-			console.error(error);
-			await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
-		}
+	catch (error) {
+		console.error(error);
+		await interaction.editReply({ content: 'There was an error while executing this command!', ephemeral: true });
 	}
 });
 

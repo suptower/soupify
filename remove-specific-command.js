@@ -5,7 +5,7 @@ const { clientId, token } = require('./config.json');
 
 const commands = [];
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-const commandID = '0000';
+const commandID = '1067840538788769863';
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -19,7 +19,7 @@ const rest = new REST({ version: '9' }).setToken(token);
 	try {
 		console.log('Started removing application (/) commands.');
 
-		await rest.delete(Routes.applicationCommands(clientId), commandID);
+		await rest.delete(Routes.applicationCommand(clientId, commandID));
 
 		console.log('Successfully removed application (/) commands.');
 	}
