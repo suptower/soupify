@@ -38,4 +38,15 @@ fs.readFile('./package.json', (err, data) => {
 	});
 });
 
-execSync('npm version patch --no-git-tag-version');
+let gitcom = '';
+for (const val of process.argv) {
+	if (process.argv.length < 3) {
+		gitcom = 'No commit message provided. ' + output;
+
+	}
+	if (val != process.argv[0] && val != process.argv[1]) {
+		gitcom += val + ' ';
+	}
+}
+
+execSync('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin master');
