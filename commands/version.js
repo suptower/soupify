@@ -3,6 +3,7 @@ const { SlashCommandBuilder } = require('discord.js');
 const { EmbedBuilder } = require('discord.js');
 const json = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
 const Version = json.version;
+const Date = json.date;
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName('version')
@@ -20,7 +21,7 @@ module.exports = {
 				{ name: 'Repository', value: 'https://github.com/suptower/soupify' },
 			)
 			.setTimestamp()
-			.setFooter({ text: 'Version ' + Version + ' | Updated: 7th of March, 2023' });
+			.setFooter({ text: 'Version ' + Version + ' | ' + Date });
 		await interaction.editReply({ embeds: [InfoEmbed] });
 	},
 };
