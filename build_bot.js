@@ -1,5 +1,5 @@
 const fs = require('fs');
-const execSync = require('child_process').execSync;
+const exec = require('child_process').exec;
 const dateTime = new Date();
 const day = dateTime.getDate();
 
@@ -30,7 +30,7 @@ function updatePackageJson(_callback) {
 		if (err) throw err;
 
 		let packageJsonObj = JSON.parse(data);
-		packageJsonObj.date = 'Updated today3';
+		packageJsonObj.date = 'Updated today4';
 		packageJsonObj = JSON.stringify(packageJsonObj, null, '\t');
 
 		fs.writeFile('./package.json', packageJsonObj, (err) => {
@@ -44,7 +44,7 @@ function updatePackageJson(_callback) {
 function commit() {
 	updatePackageJson(function() {
 		if (process.argv.length < 3) {
-			execSync('npm version patch --no-git-tag-version && git add . && git commit && git push origin');
+			exec('npm version patch --no-git-tag-version && git add . && git commit && git push origin');
 		}
 		else {
 			let gitcom = '';
@@ -53,7 +53,7 @@ function commit() {
 					gitcom += val + ' ';
 				}
 			}
-			execSync('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin');
+			exec('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin');
 		}
 	});
 }
