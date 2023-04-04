@@ -25,12 +25,12 @@ const yearString = dateTime.getFullYear().toString();
 const output = 'Updated on ' + dayString + ' of ' + monthString + ', ' + yearString + '.';
 console.log(output);
 
-async function updatePackageJson() {
+function updatePackageJson(_callback) {
 	fs.readFile('./package.json', (err, data) => {
 		if (err) throw err;
 
 		let packageJsonObj = JSON.parse(data);
-		packageJsonObj.date = 'Updated today2';
+		packageJsonObj.date = 'Updated today3';
 		packageJsonObj = JSON.stringify(packageJsonObj, null, '\t');
 
 		fs.writeFile('./package.json', packageJsonObj, (err) => {
@@ -38,20 +38,24 @@ async function updatePackageJson() {
 			console.log('Date in package.json has been updated.');
 		});
 	});
-	return true;
+	_callback();
 }
 
-updatePackageJson().then(() => {
-	if (process.argv.length < 3) {
-		execSync('npm version patch --no-git-tag-version && git add . && git commit && git push origin');
-	}
-	else {
-		let gitcom = '';
-		for (const val of process.argv) {
-			if (val != process.argv[0] && val != process.argv[1]) {
-				gitcom += val + ' ';
-			}
+function commit() {
+	updatePackageJson(function() {
+		if (process.argv.length < 3) {
+			execSync('npm version patch --no-git-tag-version && git add . && git commit && git push origin');
 		}
-		execSync('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin');
-	}
-});
+		else {
+			let gitcom = '';
+			for (const val of process.argv) {
+				if (val != process.argv[0] && val != process.argv[1]) {
+					gitcom += val + ' ';
+				}
+			}
+			execSync('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin');
+		}
+	});
+}
+
+commit();
