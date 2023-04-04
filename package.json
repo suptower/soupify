@@ -1,8 +1,8 @@
 {
 	"name": "soupify",
-	"version": "1.1.26",
+	"version": "1.1.27",
 	"description": "Discord music bot powered by soup, provided by suptower.",
-	"date": "Updated on 4th of April, 2023.",
+	"date": "Updated today",
 	"main": "./index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
