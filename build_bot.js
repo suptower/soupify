@@ -49,5 +49,5 @@ else {
 			gitcom += val + ' ';
 		}
 	}
-	execSync('npm version patch --no-git-tag-version && git add . && git commit -m ' + gitcom + ' && git push origin');
+	execSync('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin');
 }
