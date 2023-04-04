@@ -38,15 +38,16 @@ fs.readFile('./package.json', (err, data) => {
 	});
 });
 
-let gitcom = '';
-for (const val of process.argv) {
-	if (process.argv.length < 3) {
-		gitcom = 'No commit message provided. ' + output;
 
-	}
-	if (val != process.argv[0] && val != process.argv[1]) {
-		gitcom += val + ' ';
-	}
+if (process.argv.length < 3) {
+	execSync('npm version patch --no-git-tag-version && git add . && git commit && git push origin');
 }
-
-execSync('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin master');
+else {
+	let gitcom = '';
+	for (const val of process.argv) {
+		if (val != process.argv[0] && val != process.argv[1]) {
+			gitcom += val + ' ';
+		}
+	}
+	execSync('npm version patch --no-git-tag-version && git add . && git commit -m ' + gitcom + ' && git push origin');
+}
