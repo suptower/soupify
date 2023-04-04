@@ -30,7 +30,7 @@ async function updatePackageJson() {
 		if (err) throw err;
 
 		let packageJsonObj = JSON.parse(data);
-		packageJsonObj.date = output;
+		packageJsonObj.date = 'Updated today';
 		packageJsonObj = JSON.stringify(packageJsonObj, null, '\t');
 
 		fs.writeFile('./package.json', packageJsonObj, (err) => {
