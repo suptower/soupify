@@ -52,5 +52,6 @@ updatePackageJson().then(() => {
 			}
 		}
 		execSync('npm version patch --no-git-tag-version && git add . && git commit -m "' + gitcom + '" && git push origin');
+		execSync('git restore .');
 	}
 });
