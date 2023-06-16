@@ -1,17 +1,19 @@
-const { SlashCommandBuilder } = require('discord.js');
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('banger')
-		.setDescription('Plays a random banger song.')
-		.addIntegerOption(option =>
-			option.setName('amount')
-				.setDescription('Create a playlist of bangers by specifying the amount of songs you want to add.')
-				.setRequired(false)),
-	async execute(interaction, distube) {
-		await interaction.deferReply();
-		const amount = interaction.options.getInteger('amount');
-		let reply = '';
-		/* BANGERS
+  data: new SlashCommandBuilder()
+    .setName("banger")
+    .setDescription("Plays a random banger song.")
+    .addIntegerOption(option =>
+      option
+        .setName("amount")
+        .setDescription("Create a playlist of bangers by specifying the amount of songs you want to add.")
+        .setRequired(false),
+    ),
+  async execute(interaction, distube) {
+    await interaction.deferReply();
+    const amount = interaction.options.getInteger("amount");
+    let reply = "";
+    /* BANGERS
 			0 - Swedish House Mafia - Lifetime
 			1 - G-Eazy - Me, Myself & I
 			2 - Travis Scott - Sky Fall
@@ -75,74 +77,113 @@ module.exports = {
 			60 - Jungle - Busy Earnin
 			61 - Avicii - Hey Brother
 		*/
-		const vc = interaction.member.voice.channel;
-		const bangers = ['https://youtu.be/IEXQS0Idz3k', 'https://youtu.be/K533gW3boIY',
-			'https://youtu.be/cFn8jpidI24', 'https://youtu.be/T-578RNysss',
-			'https://youtu.be/7Ya2U8XN_Zw', 'https://youtu.be/1nwfaHk6ZKc',
-			'https://youtu.be/pl7-7fmYVUM', 'https://youtu.be/Ibpsqddlfdg',
-			'https://youtu.be/zKKOH1yiBOc', 'https://youtu.be/zLxXqEZ5OoA',
-			'https://youtu.be/d-JBBNg8YKs', 'https://youtu.be/VLGbfEf7o7c',
-			'https://youtu.be/ohNsldmyVRE', 'https://youtu.be/CAEUnn0HNLM',
-			'https://youtu.be/Z6wdGCO3Utc', 'https://youtu.be/4GFAZBKZVJY',
-			'https://youtu.be/8MvGyEb43-M', 'https://youtu.be/TW9uj83Vq-0',
-			'https://youtu.be/tM5xhFs5HHk', 'https://youtu.be/xpX2vf-VqkI',
-			'https://youtu.be/jtggDm-5zSk', 'https://youtu.be/YRdRhn1xZ20',
-			'https://youtu.be/UQ9e6XyQWr4', 'https://youtu.be/yV8tm-ZPdpE',
-			'https://youtu.be/zgEKLhvCCVA', 'https://youtu.be/Oggrsg4jZPM',
-			'https://youtu.be/Kh2FRFhS7QY', 'https://youtu.be/D3MB_EkNV5Y',
-			'https://youtu.be/-YVlgXN7spw', 'https://youtu.be/VTG-ForqDk4',
-			'https://youtu.be/_eDpH4hMW1o', 'https://youtu.be/ov4WobPqoSA',
-			'https://youtu.be/-uj9b9JCIJM', 'https://youtu.be/B0ET14JfjGI',
-			'https://youtu.be/rI51vRpTYyU', 'https://youtu.be/fHI8X4OXluQ',
-			'https://youtu.be/ele2DMU49Jk', 'https://youtu.be/u6lihZAcy4s',
-			'https://youtu.be/rkYlZnIbe2E', 'https://youtu.be/eg-AwKRUFec',
-			'https://youtu.be/RuPm04f9BUk', 'https://youtu.be/MY4eEOB1wSI',
-			'https://youtu.be/JWzag7a9afU', 'https://youtu.be/CwdrtwZiQ9E',
-			'https://youtu.be/TLZg0o_HTEA', 'https://youtu.be/kh5snpi8bMk',
-			'https://youtu.be/4MjSoquXAZ4', 'https://youtu.be/4WgWGcED0JQ',
-			'https://youtu.be/1ebW7okoIok', 'https://youtu.be/eNd4tt9raeg',
-			'https://youtu.be/FPAhrshC-aA', 'https://youtu.be/Tl9U0qiFQzM',
-			'https://youtu.be/nT04upwfsiI', 'https://youtu.be/9-zK_5gn4_s',
-			'https://youtu.be/WgiWUnJqy3k', 'https://youtu.be/TfbK_sCRapM',
-			'https://youtu.be/V1Z586zoeeE', 'https://youtu.be/QKW_EEDt2FE',
-			'https://youtu.be/E6zblNbGXA4', 'https://youtu.be/WbzmQcFLPE8',
-			'https://youtu.be/xkujEpoOjJ8', 'https://youtu.be/YxIiPLVR6NA'];
+    const vc = interaction.member.voice.channel;
+    const bangers = [
+      "https://youtu.be/IEXQS0Idz3k",
+      "https://youtu.be/K533gW3boIY",
+      "https://youtu.be/cFn8jpidI24",
+      "https://youtu.be/T-578RNysss",
+      "https://youtu.be/7Ya2U8XN_Zw",
+      "https://youtu.be/1nwfaHk6ZKc",
+      "https://youtu.be/pl7-7fmYVUM",
+      "https://youtu.be/Ibpsqddlfdg",
+      "https://youtu.be/zKKOH1yiBOc",
+      "https://youtu.be/zLxXqEZ5OoA",
+      "https://youtu.be/d-JBBNg8YKs",
+      "https://youtu.be/VLGbfEf7o7c",
+      "https://youtu.be/ohNsldmyVRE",
+      "https://youtu.be/CAEUnn0HNLM",
+      "https://youtu.be/Z6wdGCO3Utc",
+      "https://youtu.be/4GFAZBKZVJY",
+      "https://youtu.be/8MvGyEb43-M",
+      "https://youtu.be/TW9uj83Vq-0",
+      "https://youtu.be/tM5xhFs5HHk",
+      "https://youtu.be/xpX2vf-VqkI",
+      "https://youtu.be/jtggDm-5zSk",
+      "https://youtu.be/YRdRhn1xZ20",
+      "https://youtu.be/UQ9e6XyQWr4",
+      "https://youtu.be/yV8tm-ZPdpE",
+      "https://youtu.be/zgEKLhvCCVA",
+      "https://youtu.be/Oggrsg4jZPM",
+      "https://youtu.be/Kh2FRFhS7QY",
+      "https://youtu.be/D3MB_EkNV5Y",
+      "https://youtu.be/-YVlgXN7spw",
+      "https://youtu.be/VTG-ForqDk4",
+      "https://youtu.be/_eDpH4hMW1o",
+      "https://youtu.be/ov4WobPqoSA",
+      "https://youtu.be/-uj9b9JCIJM",
+      "https://youtu.be/B0ET14JfjGI",
+      "https://youtu.be/rI51vRpTYyU",
+      "https://youtu.be/fHI8X4OXluQ",
+      "https://youtu.be/ele2DMU49Jk",
+      "https://youtu.be/u6lihZAcy4s",
+      "https://youtu.be/rkYlZnIbe2E",
+      "https://youtu.be/eg-AwKRUFec",
+      "https://youtu.be/RuPm04f9BUk",
+      "https://youtu.be/MY4eEOB1wSI",
+      "https://youtu.be/JWzag7a9afU",
+      "https://youtu.be/CwdrtwZiQ9E",
+      "https://youtu.be/TLZg0o_HTEA",
+      "https://youtu.be/kh5snpi8bMk",
+      "https://youtu.be/4MjSoquXAZ4",
+      "https://youtu.be/4WgWGcED0JQ",
+      "https://youtu.be/1ebW7okoIok",
+      "https://youtu.be/eNd4tt9raeg",
+      "https://youtu.be/FPAhrshC-aA",
+      "https://youtu.be/Tl9U0qiFQzM",
+      "https://youtu.be/nT04upwfsiI",
+      "https://youtu.be/9-zK_5gn4_s",
+      "https://youtu.be/WgiWUnJqy3k",
+      "https://youtu.be/TfbK_sCRapM",
+      "https://youtu.be/V1Z586zoeeE",
+      "https://youtu.be/QKW_EEDt2FE",
+      "https://youtu.be/E6zblNbGXA4",
+      "https://youtu.be/WbzmQcFLPE8",
+      "https://youtu.be/xkujEpoOjJ8",
+      "https://youtu.be/YxIiPLVR6NA",
+    ];
 
-		if (amount == null) {
-			const rand = Math.floor(Math.random() * (bangers.length));
-			const songString = bangers[rand];
-			distube.play(vc, songString, {
-				member: interaction.member,
-				textChannel: interaction.channel,
-			});
-			reply = '💥   Banger added.';
-		}
-		else {
-			const songArray = [];
-			if (amount < bangers.length) {
-				for (let i = 0; i < amount; i++) {
-					const rand = Math.floor(Math.random() * (bangers.length));
-					songArray.push(bangers[rand]);
-					bangers.splice(rand, 1);
-				}
-				distube.createCustomPlaylist(songArray, {
-					member: interaction.member,
-				}).then(playlist => distube.play(vc, playlist, {
-					member: interaction.member,
-					textChannel: interaction.channel,
-				}));
-				reply = '💥   ' + amount + ' Bangers added.';
-			}
-			else {
-				distube.createCustomPlaylist(bangers, {
-					member: interaction.member,
-				}).then(playlist => distube.play(vc, playlist, {
-					member: interaction.member,
-					textChannel: interaction.channel,
-				}));
-				reply = '💥   All bangers added.';
-			}
-		}
-		return await interaction.editReply(reply);
-	},
+    if (amount == null) {
+      const rand = Math.floor(Math.random() * bangers.length);
+      const songString = bangers[rand];
+      distube.play(vc, songString, {
+        member: interaction.member,
+        textChannel: interaction.channel,
+      });
+      reply = "💥   Banger added.";
+    } else {
+      const songArray = [];
+      if (amount < bangers.length) {
+        for (let i = 0; i < amount; i++) {
+          const rand = Math.floor(Math.random() * bangers.length);
+          songArray.push(bangers[rand]);
+          bangers.splice(rand, 1);
+        }
+        distube
+          .createCustomPlaylist(songArray, {
+            member: interaction.member,
+          })
+          .then(playlist =>
+            distube.play(vc, playlist, {
+              member: interaction.member,
+              textChannel: interaction.channel,
+            }),
+          );
+        reply = "💥   " + amount + " Bangers added.";
+      } else {
+        distube
+          .createCustomPlaylist(bangers, {
+            member: interaction.member,
+          })
+          .then(playlist =>
+            distube.play(vc, playlist, {
+              member: interaction.member,
+              textChannel: interaction.channel,
+            }),
+          );
+        reply = "💥   All bangers added.";
+      }
+    }
+    return await interaction.editReply(reply);
+  },
 };
