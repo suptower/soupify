@@ -1,5 +1,5 @@
 const fs = require("fs");
-const exec = require("child_process").exec;
+// const exec = require("child_process").exec;
 const dateTime = new Date();
 const day = dateTime.getDate();
 
@@ -50,6 +50,9 @@ function updatePackageJson() {
   });
 }
 
+updatePackageJson();
+
+/*
 function commit() {
   updatePackageJson(function () {
     if (process.argv.length < 3) {
@@ -66,5 +69,5 @@ function commit() {
   });
 }
 
-updatePackageJson();
-//commit();
+
+//commit(); */
