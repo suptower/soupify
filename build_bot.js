@@ -35,7 +35,7 @@ const yearString = dateTime.getFullYear().toString();
 const output = "Updated on " + dayString + " of " + monthString + ", " + yearString + ".";
 console.log(output);
 
-function updatePackageJson(_callback) {
+function updatePackageJson() {
   fs.readFile("./package.json", (err, data) => {
     if (err) throw err;
 
@@ -48,7 +48,6 @@ function updatePackageJson(_callback) {
       console.log("Date in package.json has been updated.");
     });
   });
-  _callback();
 }
 
 function commit() {
@@ -67,4 +66,5 @@ function commit() {
   });
 }
 
-commit();
+updatePackageJson();
+//commit();
