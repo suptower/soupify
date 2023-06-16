@@ -1,5 +1,5 @@
 const fs = require("fs");
-const exec = require("child_process").exec;
+// const exec = require("child_process").exec;
 const dateTime = new Date();
 const day = dateTime.getDate();
 
@@ -35,7 +35,7 @@ const yearString = dateTime.getFullYear().toString();
 const output = "Updated on " + dayString + " of " + monthString + ", " + yearString + ".";
 console.log(output);
 
-function updatePackageJson(_callback) {
+function updatePackageJson() {
   fs.readFile("./package.json", (err, data) => {
     if (err) throw err;
 
@@ -48,9 +48,11 @@ function updatePackageJson(_callback) {
       console.log("Date in package.json has been updated.");
     });
   });
-  _callback();
 }
 
+updatePackageJson();
+
+/*
 function commit() {
   updatePackageJson(function () {
     if (process.argv.length < 3) {
@@ -67,4 +69,5 @@ function commit() {
   });
 }
 
-commit();
+
+//commit(); */
