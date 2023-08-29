@@ -4,11 +4,14 @@ const dateTime = new Date();
 const day = dateTime.getDate();
 
 let dayString = day.toString();
-if (day === 1) {
+const lastDigit = dayString.charAt(dayString.length - 1);
+if (dayString === "11" || dayString === "12" || dayString === "13") {
+  dayString += "th";
+} else if (lastDigit === "1") {
   dayString += "st";
-} else if (day === 2) {
+} else if (lastDigit === "2") {
   dayString += "nd";
-} else if (day === 3) {
+} else if (lastDigit === "3") {
   dayString += "rd";
 } else {
   dayString += "th";
@@ -16,7 +19,7 @@ if (day === 1) {
 
 const months = [
   "January",
-  "February",
+  "Febuary",
   "March",
   "April",
   "May",
@@ -24,23 +27,22 @@ const months = [
   "July",
   "August",
   "September",
-  "October",
   "November",
   "December",
 ];
+
 const monthString = months[dateTime.getMonth()];
 
 const yearString = dateTime.getFullYear().toString();
 
-const output = "Updated on " + dayString + " of " + monthString + ", " + yearString + ".";
-console.log(output);
+const dateString = "Updated on " + dayString + " of " + monthString + " " + yearString + ".";
 
 function updatePackageJson() {
   fs.readFile("./package.json", (err, data) => {
     if (err) throw err;
 
     let packageJsonObj = JSON.parse(data);
-    packageJsonObj.date = output;
+    packageJsonObj.date = dateString;
     packageJsonObj = JSON.stringify(packageJsonObj, null, "\t");
 
     fs.writeFile("./package.json", packageJsonObj, err => {
