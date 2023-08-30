@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.3.2](https://github.com/suptower/soupify/compare/v1.3.1...v1.3.2) (2023-08-30)
+
+
+### Bug Fixes
+
+* **deps:** :arrow_down: use ytsr v1.1.9 ([3cddf51](https://github.com/suptower/soupify/commit/3cddf51b9d92848d801509a8b898c373aba2c66e))
+
 ## [1.3.1](https://github.com/suptower/soupify/compare/v1.3.0...v1.3.1) (2023-08-30)
 
 ## [1.3.0](https://github.com/suptower/soupify/compare/v1.1.4...v1.3.0) (2023-08-29)
