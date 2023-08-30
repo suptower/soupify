@@ -1,6 +1,7 @@
 {
     "conventionalCommits.scopes": [
         "npm",
-        "deps"
+        "deps",
+        "distube"
     ]
 }

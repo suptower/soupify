@@ -1,0 +1,14 @@
+{
+    "domain": ".youtube.com",
+    "expirationDate": 1727942675.437886,
+    "hostOnly": false,
+    "httpOnly": true,
+    "name": "LOGIN_INFO",
+    "path": "/",
+    "sameSite": "no_restriction",
+    "secure": true,
+    "session": false,
+    "storeId": "0",
+    "value": "AFmmF2swRQIhAKUtdfuim81RGT9F5cuHnVdTBlkFfnxw1LR_wfUVZ5rrAiAp8smEdlfdQv-4QIUwN2ZS8IvXFlVkaLq_B5-gtKwrRw:QUQ3MjNmekI0WVg1eE1oRWt1SjBrc08yTC1JVzRDX2sxUG4wU3VBc04wemFnODZwdFRNZllJUWxlZVVlT0FfcEFqOVhMaXZiajNfbUlkdnNtcVMzaklXLUFRVjJ3UzYwbjVpTDRBYlNoVTBBc292b3ljeTRTSmZENGhUS2ZZSlNOdEZzalN0dlZ1T21Za1p6aDlrWVVVajdfUGFhTVlSMVlB",
+    "id": 7
+}
