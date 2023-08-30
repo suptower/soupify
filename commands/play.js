@@ -34,6 +34,9 @@ module.exports = {
           member: interaction.member,
           textChannel: interaction.channel,
           skip: true,
+        }).catch(err => {
+          console.log(err);
+          return interaction.editReply("Error: " + err);
         });
       } else if (!(wishPos == null)) {
         if (wishPos === 0) {
