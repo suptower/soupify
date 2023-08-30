@@ -5,9 +5,10 @@
 	"date": "Updated on 29th of August 2023.",
 	"main": "./index.js",
 	"scripts": {
-		"release": "node build_bot.js && standard-version",
+		"release": "node autodate.js && commit-and-tag-version",
 		"lint": "prettier --check . && eslint .",
-		"lint:fix": "prettier --write . && eslint ."
+		"lint:fix": "prettier --write . && eslint .",
+		"autodate": "node autodate.js"
 	},
 	"repository": {
 		"type": "git",
@@ -32,9 +33,10 @@
 		"@distube/spotify": "^1.0.0",
 		"@distube/yt-dlp": "^1.1.3",
 		"@sapphire/snowflake": "^3.2.2",
+		"commit-and-tag-version": "^11.2.3",
 		"discord-api-types": "^0.37.15",
 		"discord.js": "^14.6.0",
-		"distube": "^4.0.4",
+		"distube": "^4.0.6",
 		"eslint-config-prettier": "^8.8.0",
 		"eslint-config-standard": "^17.1.0",
 		"eslint-plugin-node": "^11.1.0",
@@ -45,7 +47,6 @@
 		"libsodium-wrappers": "^0.7.11",
 		"npm": "^9.6.2",
 		"prettier": "^2.8.8",
-		"standard-version": "^9.5.0",
 		"superagent": "^8.0.3"
 	},
 	"engines": {
