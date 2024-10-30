@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.0](https://github.com/suptower/soupify/compare/v1.3.2...v1.4.0) (2024-10-30)
+
+
+### Bug Fixes
+
+* BREAKING: prune outdated packages ([634e48b](https://github.com/suptower/soupify/commit/634e48b372a5942c34ad3f77dfd1907e3f9d13b1))
+* finish v1.9 ([7b8af8d](https://github.com/suptower/soupify/commit/7b8af8d64ae25cfc6706f41a55bb1378ecaad383))
+
+## [1.3.3](https://github.com/suptower/soupify/compare/v1.3.2...v1.3.3) (2024-10-30)
+
+
+### Bug Fixes
+
+* BREAKING: prune outdated packages ([634e48b](https://github.com/suptower/soupify/commit/634e48b372a5942c34ad3f77dfd1907e3f9d13b1))
+* finish v1.9 ([7b8af8d](https://github.com/suptower/soupify/commit/7b8af8d64ae25cfc6706f41a55bb1378ecaad383))
+
 ## [1.3.2](https://github.com/suptower/soupify/compare/v1.3.1...v1.3.2) (2023-08-30)
 
 
