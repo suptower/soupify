@@ -51,7 +51,7 @@
 		"superagent": "^8.0.3"
 	},
 	"engines": {
-		"node": "20.x"
+		"node": "22.x"
 	},
 	"devDependencies": {
 		"eslint": "^8.11.0"
