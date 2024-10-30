@@ -2,9 +2,12 @@
 const fs = require("fs");
 const { Client, Collection, GatewayIntentBits, EmbedBuilder, Partials } = require("discord.js");
 const DisTube = require("distube");
+const { YouTubePlugin } = require("@distube/youtube");
 const { YtDlpPlugin } = require("@distube/yt-dlp");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { SpotifyPlugin } = require("@distube/spotify");
+const { DeezerPlugin } = require("@distube/deezer");
+const { DirectLinkPlugin } = require("@distube/direct-link");
 const { ActivityType, ChannelType } = require("discord-api-types/v10");
 const { token } = require("./config.json");
 
@@ -33,20 +36,18 @@ for (const file of commandFiles) {
 
 // eslint-disable-next-line new-cap
 const distube = new DisTube.default(client, {
-  searchSongs: 1,
-  searchCooldown: 5,
-  leaveOnEmpty: true,
-  emptyCooldown: 10,
-  leaveOnFinish: false,
-  leaveOnStop: true,
+  emitAddListWhenCreatingQueue: true,
+  emitAddSongWhenCreatingQueue: true,
+  joinNewVoiceChannel: true,
   nsfw: true,
-  youtubeCookie:
-    "PREF=tz=Europe.Berlin&f6=40000000; CONSENT=YES+yt.458102784.de+FX+389; SOCS=CAISEwgDEgk0NTgxMDI3ODQaAmRlIAEaBgiAlf6VBg; VISITOR_INFO1_LIVE=x8ySMMgdZSY; SID=LwhkNve6WnprqFUIpS5rPfvRYtlcl1cPvbWYEjuRv93HPefj6jM1XijdjVJBfJwc4t_gIg.; __Secure-1PSID=LwhkNve6WnprqFUIpS5rPfvRYtlcl1cPvbWYEjuRv93HPefjmlfoE_1fulpaMP8S4dey5A.; __Secure-3PSID=LwhkNve6WnprqFUIpS5rPfvRYtlcl1cPvbWYEjuRv93HPefjmzHvPMyYP8naFCLnEc7YGg.; HSID=A1XHFc_gQ72RF2_-H; SSID=AoLmJHhXedoWZZc-i; APISID=KaKOiYkystaD6B94/Ar_4BTpEtwQBmdfJf; SAPISID=ADbnz8msVTmivVLX/A5uG9GXFMp77A0dYh; __Secure-1PAPISID=ADbnz8msVTmivVLX/A5uG9GXFMp77A0dYh; __Secure-3PAPISID=ADbnz8msVTmivVLX/A5uG9GXFMp77A0dYh; LOGIN_INFO=AFmmF2swRQIgRtUwcpi-fbBKEvY91StHoYkpx2fgVPlP9_M_6UcQeF8CIQC5ytmum603JDB69qDha5EQ3BN3Kc4BnpGcd_5_YQqXMQ:QUQ3MjNmem1IdzY4T3NjVjFHdHhwa2hHUkxiWnl0Wm5LSl9HeXl1UzNWREJKSGVxcGJjVDhqSFFUOVdOdkY1UU1zME9VZlNmb0RaSDhYMkMzTVlkUlRfekl2ZDdMZkk5Y19tZlRCWDlLM3RsanFSeWVjZzIyR0Zra2Vfa2lZRFN6RWNXNFlMaXF6SGR3UmthTGdIb2x1S2c5OWxLVU9xZm5OdjBBcmxhTG5DMUdiblhReV8zd0gtWV9GTXc4MUhfRW9IbVdUa1N4ZHI4NjQtankxTmZYSXF4bmZyaGV3MF9YQQ==; YSC=B9yX8TmHThE; SIDCC=AJi4QfGhb92xZYhNi76knj2p3nNKID4tafZSL0zt6TmzhL9eDkj3kf6hW73EZ7nyVhamXYmjcvU; __Secure-1PSIDCC=AJi4QfGQD9eecUvdU7t8if9Up8aj2do7SMb68PUoqRfIDOaPcqbvWU90dU4iA2Yrm2S1yt-GGow; __Secure-3PSIDCC=AJi4QfFTrecMuvOUwo5j9wJL1jQjwAp6C7zpbfzpjmunOhPiu8cpJAnBVX1roITDebAF0cqHrWU",
   plugins: [
-    new SoundCloudPlugin(),
-    new SpotifyPlugin({
-      emitEventsAfterFetching: true,
+    new YouTubePlugin({
+      cookies: JSON.parse(fs.readFileSync("./yt-cookies.json", "utf8")),
     }),
+    new SoundCloudPlugin(),
+    new SpotifyPlugin(),
+    new DeezerPlugin(),
+    new DirectLinkPlugin(),
     new YtDlpPlugin(),
   ],
 });
