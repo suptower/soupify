@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.1](https://github.com/suptower/soupify/compare/v1.4.0...v1.4.1) (2024-10-30)
+
+
+### Bug Fixes
+
+* update node engine ([278132e](https://github.com/suptower/soupify/commit/278132e308a37fb3f02b8afa331d9e8018c0f0d2))
+
 ## [1.4.0](https://github.com/suptower/soupify/compare/v1.3.2...v1.4.0) (2024-10-30)
 
 
