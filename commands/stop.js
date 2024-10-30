@@ -7,9 +7,8 @@ module.exports = {
     await interaction.deferReply();
     if (distube.getQueue(interaction.guild)) {
       distube.stop(interaction.guild);
-    } else {
-      distube.voices.get(interaction.guild).leave();
-    }
+    } 
+    distube.voices.get(interaction.guild).leave();
     return interaction.editReply("⏹️   Player stopped.");
   },
 };
