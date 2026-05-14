@@ -30,14 +30,16 @@ module.exports = {
     const queue = distube.getQueue(interaction.guild);
     if (queue) {
       if (inst) {
-        distube.play(vc, songString, {
-          member: interaction.member,
-          textChannel: interaction.channel,
-          skip: true,
-        }).catch(err => {
-          console.log(err);
-          return interaction.editReply("Error: " + err);
-        });
+        distube
+          .play(vc, songString, {
+            member: interaction.member,
+            textChannel: interaction.channel,
+            skip: true,
+          })
+          .catch(err => {
+            console.log(err);
+            return interaction.editReply("Error: " + err);
+          });
       } else if (!(wishPos == null)) {
         if (wishPos === 0) {
           distube.play(vc, songString, {
@@ -55,9 +57,7 @@ module.exports = {
             member: interaction.member,
             textChannel: interaction.channel,
           });
-          const newQueue = distube.getQueue(interaction.guild);
-          newQueue.songs.splice(wishPos, 0, newQueue.songs[newQueue.songs.length - 1]);
-          newQueue.songs.splice(newQueue.songs.length - 1, 1);
+          distube.move(interaction.guild, queue.songs.length, wishPos);
         }
       } else {
         distube.play(vc, songString, {

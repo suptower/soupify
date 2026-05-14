@@ -17,19 +17,29 @@ module.exports = {
     if (queue) {
       if (!(pos == null)) {
         if (pos === 0) {
+          removedSong = queue.songs[0].name;
           distube.skip(interaction.guild);
         } else if (pos > 0 && pos < queue.songs.length) {
-          removedSong = queue.songs[pos].name;
-          queue.songs.splice(pos, 1);
+          const removedTrack = distube.remove(interaction.guild, pos);
+          if (!removedTrack) {
+            return interaction.editReply("Failed to remove this song from queue.");
+          }
+          removedSong = removedTrack.name;
         } else if (pos >= queue.songs.length) {
-          const s = queue.songs.pop();
-          removedSong = s.name;
+          const removedTrack = distube.pop(interaction.guild);
+          if (!removedTrack) {
+            return interaction.editReply("Failed to remove this song from queue.");
+          }
+          removedSong = removedTrack.name;
         } else {
           return interaction.editReply("Your given position is not in accepted range.");
         }
       } else {
-        const s = queue.songs.pop();
-        removedSong = s.name;
+        const removedTrack = distube.pop(interaction.guild);
+        if (!removedTrack) {
+          return interaction.editReply("Failed to remove this song from queue.");
+        }
+        removedSong = removedTrack.name;
       }
     } else {
       return interaction.editReply("There is no queue.");

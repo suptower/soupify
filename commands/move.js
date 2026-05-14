@@ -14,9 +14,7 @@ module.exports = {
       return interaction.editReply("This does only work if there is a queue.");
     } else if (oldPos > 0 && oldPos < queue.songs.length) {
       if (newPos > 0 && newPos < queue.songs.length) {
-        const elem = queue.songs[oldPos];
-        queue.songs.splice(newPos, 0, elem);
-        queue.songs.splice(oldPos + 1, 1);
+        distube.move(interaction.guild, oldPos, newPos);
       } else {
         return interaction.editReply("The newPosition value was not in accepted range.");
       }
