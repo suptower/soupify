@@ -136,20 +136,21 @@ const distubeCompat = {
     if (!queue) return null;
     const track = queue.tracks.at(pos - 1);
     if (!track) return null;
-    const removedTrack = queue.removeTrack(track);
+    const removedTrack = queue.node.remove(track);
     return removedTrack ? toCompatTrack(removedTrack) : null;
   },
   pop(guildOrInteraction) {
     const queue = getRawQueue(guildOrInteraction);
     if (!queue || queue.tracks.size === 0) return null;
     const track = queue.tracks.at(queue.tracks.size - 1);
-    const removedTrack = queue.removeTrack(track);
+    const removedTrack = queue.node.remove(track);
     return removedTrack ? toCompatTrack(removedTrack) : null;
   },
   shuffle(guildOrInteraction) {
     const queue = getRawQueue(guildOrInteraction);
     if (!queue) return false;
-    return queue.enableShuffle(false);
+    queue.tracks.shuffle();
+    return true;
   },
   setVolume(queueOrGuild, vol) {
     const queue = queueOrGuild?.__rawQueue ?? getRawQueue(queueOrGuild);
