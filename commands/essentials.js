@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
 module.exports = {
   data: new SlashCommandBuilder().setName("essentials").setDescription("Plays Essentials 2010 playlist"),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
     if (!interaction.member.voice.channel) {
       return interaction.editReply("You need to be connected to a voice channel.");
@@ -18,9 +18,14 @@ module.exports = {
       );
     const vc = interaction.member.voice.channel;
     const songString = "https://open.spotify.com/playlist/1FQypuz87kt9ICJi64CjHq?si=2a03feeb2f8c4cd5";
-    distube.play(vc, songString, {
-      member: interaction.member,
-      textChannel: interaction.channel,
+    await player.play(vc, songString, {
+      requestedBy: interaction.member,
+      nodeOptions: {
+        metadata: { channel: interaction.channel },
+        leaveOnEmpty: true,
+        leaveOnStop: true,
+        leaveOnEnd: true,
+      },
     });
     interaction.channel.send({ embeds: [InfoEmbed] });
     return await interaction.editReply(

@@ -1,13 +1,15 @@
 const { SlashCommandBuilder, ButtonStyle } = require("discord.js");
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { getQueue, getQueueTracks } = require("../music/queue");
 module.exports = {
   data: new SlashCommandBuilder().setName("queue").setDescription("Show the queue"),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
-    const queue = distube.getQueue(interaction.guild);
+    const queue = getQueue(player, interaction.guild);
     if (!queue) {
       return interaction.editReply("There is no queue.");
     } else {
+      const songs = getQueueTracks(queue);
       const row0 = new ActionRowBuilder()
         .addComponents(
           new ButtonBuilder()
@@ -64,10 +66,10 @@ module.exports = {
       let infoBuffer = "";
       let offset = 0;
       let msgId = 0;
-      for (let i = 0; i < 10 && i < queue.songs.length; i++) {
-        infoBuffer += i + offset + " - [" + queue.songs[i].formattedDuration + "] - " + queue.songs[i].name + "\n";
+      for (let i = 0; i < 10 && i < songs.length; i++) {
+        infoBuffer += i + offset + " - [" + songs[i].duration + "] - " + songs[i].title + "\n";
       }
-      if (queue.songs.length > 10) {
+      if (songs.length > 10) {
         await interaction.channel
           .send({
             content:
@@ -76,7 +78,7 @@ module.exports = {
               "\n------------------------------ 📻   PAGE (" +
               (offset / 10 + 1) +
               "/" +
-              parseInt((queue.songs.length - 1) / 10 + 1) +
+              parseInt((songs.length - 1) / 10 + 1) +
               ")   ------------------------------------```",
             components: [row0],
           })
@@ -92,7 +94,7 @@ module.exports = {
               "\n------------------------------ 📻   PAGE (" +
               (offset / 10 + 1) +
               "/" +
-              parseInt((queue.songs.length - 1) / 10 + 1) +
+              parseInt((songs.length - 1) / 10 + 1) +
               ")   ------------------------------------```",
             components: [row3],
           })
@@ -109,18 +111,11 @@ module.exports = {
           offset += 10;
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
-            if (x + offset < queue.songs.length && x + offset >= 0) {
-              infoBuffer +=
-                x +
-                offset +
-                " - [" +
-                queue.songs[x + offset].formattedDuration +
-                "] - " +
-                queue.songs[x + offset].name +
-                "\n";
+            if (x + offset < songs.length && x + offset >= 0) {
+              infoBuffer += x + offset + " - [" + songs[x + offset].duration + "] - " + songs[x + offset].title + "\n";
             }
           }
-          if (offset + 10 >= queue.songs.length) {
+          if (offset + 10 >= songs.length) {
             await i.update({
               content:
                 "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
@@ -128,7 +123,7 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row2],
             });
@@ -140,7 +135,7 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row1],
             });
@@ -150,15 +145,8 @@ module.exports = {
           offset -= 10;
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
-            if (x + offset < queue.songs.length && x + offset >= 0) {
-              infoBuffer +=
-                x +
-                offset +
-                " - [" +
-                queue.songs[x + offset].formattedDuration +
-                "] - " +
-                queue.songs[x + offset].name +
-                "\n";
+            if (x + offset < songs.length && x + offset >= 0) {
+              infoBuffer += x + offset + " - [" + songs[x + offset].duration + "] - " + songs[x + offset].title + "\n";
             }
           }
           if (offset === 0) {
@@ -169,7 +157,7 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row0],
             });
@@ -181,7 +169,7 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row1],
             });

@@ -1,14 +1,16 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { getQueue } = require("../music/queue");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("stop")
     .setDescription("Stop the player, empty queue and disconnect from channel"),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
-    if (distube.getQueue(interaction.guild)) {
-      distube.stop(interaction.guild);
+    const queue = getQueue(player, interaction.guild);
+    if (queue) {
+      queue.node.stop();
+      queue.delete();
     }
-    distube.voices.get(interaction.guild).leave();
     return interaction.editReply("⏹️   Player stopped.");
   },
 };
