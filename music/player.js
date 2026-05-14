@@ -1,11 +1,18 @@
 const { EmbedBuilder } = require("discord.js");
 const { Player } = require("discord-player");
+const { DefaultExtractors } = require("@discord-player/extractor");
 
 const createPlayer = async client => {
   // eslint-disable-next-line new-cap
   const player = new Player(client);
 
-  await player.extractors.loadDefault();
+  // console.log(player.scanDeps());
+
+  await player.extractors.loadMulti(DefaultExtractors);
+
+  // player.on('debug', (message) => {
+  //   console.log('[Player Debug]', message);
+  // });
 
   player.events.on("playerStart", (queue, track) => {
     const channel = queue.metadata?.channel;
@@ -13,9 +20,11 @@ const createPlayer = async client => {
     channel.send({
       embeds: [
         new EmbedBuilder()
-          .setDescription(`🎶 | Now playing **${track.title}**!`)
+          .setTitle("Now Playing")
+          .setDescription(`[${track.title}](${track.url})`)
           .setThumbnail(track.thumbnail)
-          .setColor("Random"),
+          .setColor("#1db954")
+          .setFooter({ text: "Requested by " + track.requestedBy.tag, iconURL: track.requestedBy.displayAvatarURL() }),
       ],
     });
   });

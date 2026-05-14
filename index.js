@@ -28,7 +28,7 @@ for (const file of commandFiles) {
 const start = async () => {
   const player = await createPlayer(client);
 
-  client.once("ready", () => {
+  client.once("clientReady", () => {
     console.log("[soupify] Ready!");
     client.user.setPresence({ activities: [{ type: ActivityType.Listening, name: "/play" }], status: "online" });
   });

@@ -65,12 +65,12 @@ module.exports = {
         );
       let infoBuffer = "";
       let offset = 0;
-      let msgId = 0;
       for (let i = 0; i < 10 && i < songs.length; i++) {
         infoBuffer += i + offset + " - [" + songs[i].duration + "] - " + songs[i].title + "\n";
       }
+      let message;
       if (songs.length > 10) {
-        await interaction.channel
+        message = await interaction.channel
           .send({
             content:
               "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
@@ -82,11 +82,8 @@ module.exports = {
               ")   ------------------------------------```",
             components: [row0],
           })
-          .then(message => {
-            msgId = message.id;
-          });
       } else {
-        await interaction.channel
+        message = await interaction.channel
           .send({
             content:
               "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
@@ -98,15 +95,12 @@ module.exports = {
               ")   ------------------------------------```",
             components: [row3],
           })
-          .then(message => {
-            msgId = message.id;
-          });
       }
-      const collector = interaction.channel.createMessageComponentCollector({
+      const collector = message.createMessageComponentCollector({
         time: 30000,
       });
       collector.on("collect", async i => {
-        if (i.customId === "next" && i.message.id === msgId) {
+        if (i.customId === "next") {
           collector.resetTimer();
           offset += 10;
           infoBuffer = "";
@@ -140,7 +134,7 @@ module.exports = {
               components: [row1],
             });
           }
-        } else if (i.customId === "prev" && i.message.id === msgId) {
+        } else if (i.customId === "prev") {
           collector.resetTimer();
           offset -= 10;
           infoBuffer = "";
@@ -177,7 +171,7 @@ module.exports = {
         }
       });
       collector.on("end", () => {
-        interaction.channel.messages.fetch(msgId).then(message => message.delete());
+        message.delete();
       });
       return interaction.deleteReply();
     }
