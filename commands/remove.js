@@ -17,6 +17,9 @@ module.exports = {
     if (queue) {
       if (!(pos == null)) {
         if (pos === 0) {
+          if (!queue.songs[0]) {
+            return interaction.editReply("There is no song to remove.");
+          }
           removedSong = queue.songs[0].name;
           distube.skip(interaction.guild);
         } else if (pos > 0 && pos < queue.songs.length) {
