@@ -1,6 +1,9 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
 const { getQueue } = require("../music/queue");
+
+const PROGRESS_SEGMENTS = 15;
+
 module.exports = {
   data: new SlashCommandBuilder().setName("nowplaying").setDescription("Information to the current playing song."),
   async execute(interaction, player) {
@@ -15,9 +18,9 @@ module.exports = {
     const timeCurrentFormatted = timestamp?.current?.label ?? "0:00";
     const duration = parseInt(song.durationMS / 1000);
     const durationFormatted = song.duration;
-    const partial = Math.max(parseInt(duration / 15), 1);
-    const done = Math.min(15, parseInt(timeCurrent / partial));
-    const undone = 15 - done;
+    const partial = Math.max(parseInt(duration / PROGRESS_SEGMENTS), 1);
+    const done = Math.min(PROGRESS_SEGMENTS, parseInt(timeCurrent / partial));
+    const undone = PROGRESS_SEGMENTS - done;
     let infoBuffer = "▶️  ";
     for (let i = 0; i < done; i++) {
       infoBuffer += "▬";

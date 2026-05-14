@@ -8,8 +8,9 @@ const createPlayer = async client => {
   await player.extractors.loadDefault();
 
   player.events.on("playerStart", (queue, track) => {
-    if (!queue.metadata?.channel) return;
-    queue.metadata.channel.send({
+    const channel = queue.metadata?.channel;
+    if (!channel) return;
+    channel.send({
       embeds: [
         new EmbedBuilder()
           .setDescription(`🎶 | Now playing **${track.title}**!`)
