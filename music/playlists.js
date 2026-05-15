@@ -40,7 +40,9 @@ const enqueuePlaylist = async ({ player, interaction, playlistUrl, shuffle }) =>
   if (typeof queue.addTracks === "function") {
     queue.addTracks(tracks);
   } else {
-    queue.addTrack(tracks);
+    for (const track of tracks) {
+      queue.addTrack(track);
+    }
   }
 
   if (!queue.connection) {
