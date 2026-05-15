@@ -32,6 +32,9 @@ const enqueuePlaylist = async ({ player, interaction, playlistUrl, shuffle }) =>
   if (!interaction.guild) {
     throw new Error("This command can only be used inside a server.");
   }
+  if (!interaction.member.voice?.channel) {
+    throw new Error("You need to be connected to a voice channel.");
+  }
 
   const queue = player.nodes.get(interaction.guild) ?? createPlaybackQueue(player, interaction);
   queue.addTrack(tracks);
