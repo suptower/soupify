@@ -11,6 +11,8 @@ const fisherYatesShuffle = tracks => {
     const j = Math.floor(Math.random() * (i + 1));
     [tracks[i], tracks[j]] = [tracks[j], tracks[i]];
   }
+
+  return tracks;
 };
 
 const enqueuePlaylist = async ({ player, interaction, playlistUrl, shuffle }) => {
@@ -25,6 +27,10 @@ const enqueuePlaylist = async ({ player, interaction, playlistUrl, shuffle }) =>
   const tracks = [...result.tracks];
   if (shuffle) {
     fisherYatesShuffle(tracks);
+  }
+
+  if (!interaction.guild) {
+    throw new Error("This command can only be used inside a server.");
   }
 
   const queue = player.nodes.get(interaction.guild) ?? createPlaybackQueue(player, interaction);
