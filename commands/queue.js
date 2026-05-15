@@ -69,35 +69,46 @@ module.exports = {
       let infoBuffer = "";
       let offset = 0;
       for (let i = 0; i < 10 && i < songs.length; i++) {
-        infoBuffer += i + offset + " " + FIRST_SEPARATOR + "[" + songs[i].duration + "] " + SECOND_SEPARATOR + " " + songs[i].author + " - " + songs[i].title + "\n";
+        infoBuffer +=
+          i +
+          offset +
+          " " +
+          FIRST_SEPARATOR +
+          "[" +
+          songs[i].duration +
+          "] " +
+          SECOND_SEPARATOR +
+          " " +
+          songs[i].author +
+          " - " +
+          songs[i].title +
+          "\n";
       }
       let message;
       if (songs.length > 10) {
-        message = await interaction.channel
-          .send({
-            content:
-              "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
-              infoBuffer +
-              "\n------------------------------ 📻   PAGE (" +
-              (offset / 10 + 1) +
-              "/" +
-              parseInt((songs.length - 1) / 10 + 1) +
-              ")   ------------------------------------```",
-            components: [row0],
-          })
+        message = await interaction.channel.send({
+          content:
+            "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
+            infoBuffer +
+            "\n------------------------------ 📻   PAGE (" +
+            (offset / 10 + 1) +
+            "/" +
+            parseInt((songs.length - 1) / 10 + 1) +
+            ")   ------------------------------------```",
+          components: [row0],
+        });
       } else {
-        message = await interaction.channel
-          .send({
-            content:
-              "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
-              infoBuffer +
-              "\n------------------------------ 📻   PAGE (" +
-              (offset / 10 + 1) +
-              "/" +
-              parseInt((songs.length - 1) / 10 + 1) +
-              ")   ------------------------------------```",
-            components: [row3],
-          })
+        message = await interaction.channel.send({
+          content:
+            "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
+            infoBuffer +
+            "\n------------------------------ 📻   PAGE (" +
+            (offset / 10 + 1) +
+            "/" +
+            parseInt((songs.length - 1) / 10 + 1) +
+            ")   ------------------------------------```",
+          components: [row3],
+        });
       }
       const collector = message.createMessageComponentCollector({
         time: 300000,
@@ -109,7 +120,20 @@ module.exports = {
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
             if (x + offset < songs.length && x + offset >= 0) {
-              infoBuffer += x + offset + " " + FIRST_SEPARATOR + "[" + songs[x + offset].duration + "] " + SECOND_SEPARATOR + " " + songs[x + offset].author + " - " + songs[x + offset].title + "\n";
+              infoBuffer +=
+                x +
+                offset +
+                " " +
+                FIRST_SEPARATOR +
+                "[" +
+                songs[x + offset].duration +
+                "] " +
+                SECOND_SEPARATOR +
+                " " +
+                songs[x + offset].author +
+                " - " +
+                songs[x + offset].title +
+                "\n";
             }
           }
           if (offset + 10 >= songs.length) {
@@ -143,7 +167,20 @@ module.exports = {
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
             if (x + offset < songs.length && x + offset >= 0) {
-              infoBuffer += x + offset + " " + FIRST_SEPARATOR + "[" + songs[x + offset].duration + "] " + SECOND_SEPARATOR + " " + songs[x + offset].author + " - " + songs[x + offset].title + "\n";
+              infoBuffer +=
+                x +
+                offset +
+                " " +
+                FIRST_SEPARATOR +
+                "[" +
+                songs[x + offset].duration +
+                "] " +
+                SECOND_SEPARATOR +
+                " " +
+                songs[x + offset].author +
+                " - " +
+                songs[x + offset].title +
+                "\n";
             }
           }
           if (offset === 0) {

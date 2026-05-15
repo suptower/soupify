@@ -4,8 +4,6 @@ const { ActivityType, ChannelType } = require("discord-api-types/v10");
 const { token } = require("./config.json");
 const { createPlayer } = require("./music/player");
 
-
-
 const client = new Client({
   intents: [
     GatewayIntentBits.Guilds,

@@ -37,7 +37,7 @@ module.exports = {
         { name: "Title", value: `${song.author} - ${song.cleanTitle}` },
         { name: "Duration", value: `${durationFormatted}`, inline: true },
         { name: "Progress", value: `${infoBuffer} ${timeDisplay}`, inline: true },
-        { name: "Source", value: `[Link](${song.url})`}
+        { name: "Source", value: `[Link](${song.url})` },
       )
       .setThumbnail(song.thumbnail);
     return interaction.editReply({ embeds: [nowplayingEmbed] });

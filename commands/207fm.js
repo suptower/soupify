@@ -1,7 +1,13 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
+const { enqueuePlaylist } = require("../music/playlists");
 module.exports = {
-  data: new SlashCommandBuilder().setName("207fm").setDescription("APACHE BLEIBT GLEICH.").addBooleanOption(option => option.setName("shuffle").setDescription("Whether to shuffle the playlist").setRequired(false)),
+  data: new SlashCommandBuilder()
+    .setName("207fm")
+    .setDescription("APACHE BLEIBT GLEICH.")
+    .addBooleanOption(option =>
+      option.setName("shuffle").setDescription("Whether to shuffle the playlist").setRequired(false),
+    ),
   async execute(interaction, player) {
     await interaction.deferReply();
     if (!interaction.member.voice.channel) {
@@ -17,35 +23,20 @@ module.exports = {
         { name: "Spotify", value: "https://spoti.fi/3m9BCgg" },
         { name: "Playlist", value: "https://spoti.fi/3e7i3k9" },
       );
-    const vc = interaction.member.voice.channel;
     const songString = "https://open.spotify.com/playlist/7x1xrBl5lVg63ppvEaxdrb?si=8e11c61e50134ad8";
 
-    // Shuffle the playlist if the option is enabled^
-    if (shuffle) {
-      const playlist = await player.playlist(songString, {
-        requestedBy: interaction.user,
+    try {
+      await enqueuePlaylist({
+        player,
+        interaction,
+        playlistUrl: songString,
+        shuffle,
       });
-      playlist.tracks.shuffle();
-      await player.play(vc, playlist, {
-        requestedBy: interaction.user,
-        nodeOptions: {
-          metadata: { channel: interaction.channel },
-          leaveOnEmpty: true,
-          leaveOnStop: true,
-          leaveOnEnd: true,
-        },
-      });
-    } else {
-      await player.play(vc, songString, {
-        requestedBy: interaction.member,
-        nodeOptions: {
-          metadata: { channel: interaction.channel },
-          leaveOnEmpty: true,
-          leaveOnStop: true,
-          leaveOnEnd: true,
-        },
-      });
+    } catch (error) {
+      console.error(error);
+      return interaction.editReply("Error: " + error.message);
     }
+
     interaction.channel.send({ embeds: [InfoEmbed] });
     if (shuffle) {
       return await interaction.editReply(

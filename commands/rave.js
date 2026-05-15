@@ -1,7 +1,13 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
+const { enqueuePlaylist } = require("../music/playlists");
 module.exports = {
-  data: new SlashCommandBuilder().setName("rave").setDescription("Plays RAVE AVENUE playlist").addBooleanOption(option => option.setName("shuffle").setDescription("Whether to shuffle the playlist").setRequired(false)),
+  data: new SlashCommandBuilder()
+    .setName("rave")
+    .setDescription("Plays RAVE AVENUE playlist")
+    .addBooleanOption(option =>
+      option.setName("shuffle").setDescription("Whether to shuffle the playlist").setRequired(false),
+    ),
   async execute(interaction, player) {
     await interaction.deferReply();
     if (!interaction.member.voice.channel) {
@@ -16,33 +22,18 @@ module.exports = {
         { name: "Author", value: "https://spoti.fi/3yz6Wdg" },
         { name: "Playlist", value: "https://spoti.fi/3TSgAla" },
       );
-    const vc = interaction.member.voice.channel;
     const songString = "https://open.spotify.com/playlist/79gyv8Wdrdrujk2NgFfIBS?si=e7386ea3903841a1";
     const shuffle = interaction.options.getBoolean("shuffle") ?? false;
-    if (shuffle) {
-      const playlist = await player.playlist(songString, {
-        requestedBy: interaction.user,
+    try {
+      await enqueuePlaylist({
+        player,
+        interaction,
+        playlistUrl: songString,
+        shuffle,
       });
-      playlist.tracks.shuffle();
-      await player.play(vc, playlist, {
-        requestedBy: interaction.user,
-        nodeOptions: {
-          metadata: { channel: interaction.channel },
-          leaveOnEmpty: true,
-          leaveOnStop: true,
-          leaveOnEnd: true,
-        },
-      });
-    } else {
-      await player.play(vc, songString, {
-        requestedBy: interaction.user,
-        nodeOptions: {
-          metadata: { channel: interaction.channel },
-          leaveOnEmpty: true,
-          leaveOnStop: true,
-          leaveOnEnd: true,
-        },
-      });
+    } catch (error) {
+      console.error(error);
+      return interaction.editReply("Error: " + error.message);
     }
     interaction.channel.send({ embeds: [InfoEmbed] });
     return await interaction.editReply(
