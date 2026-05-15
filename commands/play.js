@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { getQueue, getQueueTracks } = require("../music/queue");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("play")
@@ -18,7 +19,7 @@ module.exports = {
         .setDescription("If true, the song will instantly start playing (ignores position)")
         .setRequired(false),
     ),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
     if (!interaction.member.voice.channel) {
       return interaction.editReply("You need to be connected to a voice channel.");
@@ -27,50 +28,30 @@ module.exports = {
     const songString = interaction.options.getString("song");
     const wishPos = interaction.options.getInteger("position");
     const inst = interaction.options.getBoolean("instant");
-    const queue = distube.getQueue(interaction.guild);
-    if (queue) {
-      if (inst) {
-        distube.play(vc, songString, {
-          member: interaction.member,
-          textChannel: interaction.channel,
-          skip: true,
-        }).catch(err => {
-          console.log(err);
-          return interaction.editReply("Error: " + err);
-        });
-      } else if (!(wishPos == null)) {
-        if (wishPos === 0) {
-          distube.play(vc, songString, {
-            member: interaction.member,
-            textChannel: interaction.channel,
-            skip: true,
-          });
-        } else if (wishPos >= queue.songs.length) {
-          distube.play(vc, songString, {
-            member: interaction.member,
-            textChannel: interaction.channel,
-          });
-        } else if (wishPos < queue.songs.length) {
-          await distube.play(vc, songString, {
-            member: interaction.member,
-            textChannel: interaction.channel,
-          });
-          const newQueue = distube.getQueue(interaction.guild);
-          newQueue.songs.splice(wishPos, 0, newQueue.songs[newQueue.songs.length - 1]);
-          newQueue.songs.splice(newQueue.songs.length - 1, 1);
-        }
-      } else {
-        distube.play(vc, songString, {
-          member: interaction.member,
-          textChannel: interaction.channel,
-        });
-      }
-    } else {
-      distube.play(vc, songString, {
-        member: interaction.member,
-        textChannel: interaction.channel,
+    const queue = getQueue(player, interaction.guild);
+    const queueSizeBefore = queue ? getQueueTracks(queue).length : 0;
+    try {
+      const result = await player.play(vc, songString, {
+        requestedBy: interaction.member,
+        nodeOptions: {
+          metadata: { channel: interaction.channel },
+          leaveOnEmpty: true,
+          leaveOnStop: true,
+          leaveOnEnd: true,
+        },
       });
+
+      if ((inst || wishPos === 0) && result.track.id !== result.queue.currentTrack?.id) {
+        result.queue.node.move(result.track, 0);
+        result.queue.node.skip();
+      } else if (!(wishPos == null) && wishPos > 0 && wishPos < queueSizeBefore) {
+        result.queue.node.move(result.track, wishPos - 1);
+      }
+    } catch (err) {
+      console.log(err);
+      return interaction.editReply("Error: " + err);
     }
+
     await interaction.editReply("Success.");
     return interaction.deleteReply();
   },

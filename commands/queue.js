@@ -1,13 +1,18 @@
 const { SlashCommandBuilder, ButtonStyle } = require("discord.js");
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
+const { getQueue, getQueueTracks } = require("../music/queue");
+
+const FIRST_SEPARATOR = "▶️ ";
+const SECOND_SEPARATOR = "ℹ️";
 module.exports = {
   data: new SlashCommandBuilder().setName("queue").setDescription("Show the queue"),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
-    const queue = distube.getQueue(interaction.guild);
+    const queue = getQueue(player, interaction.guild);
     if (!queue) {
       return interaction.editReply("There is no queue.");
     } else {
+      const songs = getQueueTracks(queue);
       const row0 = new ActionRowBuilder()
         .addComponents(
           new ButtonBuilder()
@@ -63,64 +68,75 @@ module.exports = {
         );
       let infoBuffer = "";
       let offset = 0;
-      let msgId = 0;
-      for (let i = 0; i < 10 && i < queue.songs.length; i++) {
-        infoBuffer += i + offset + " - [" + queue.songs[i].formattedDuration + "] - " + queue.songs[i].name + "\n";
+      for (let i = 0; i < 10 && i < songs.length; i++) {
+        infoBuffer +=
+          i +
+          offset +
+          " " +
+          FIRST_SEPARATOR +
+          "[" +
+          songs[i].duration +
+          "] " +
+          SECOND_SEPARATOR +
+          " " +
+          songs[i].author +
+          " - " +
+          songs[i].title +
+          "\n";
       }
-      if (queue.songs.length > 10) {
-        await interaction.channel
-          .send({
-            content:
-              "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
-              infoBuffer +
-              "\n------------------------------ 📻   PAGE (" +
-              (offset / 10 + 1) +
-              "/" +
-              parseInt((queue.songs.length - 1) / 10 + 1) +
-              ")   ------------------------------------```",
-            components: [row0],
-          })
-          .then(message => {
-            msgId = message.id;
-          });
+      let message;
+      if (songs.length > 10) {
+        message = await interaction.channel.send({
+          content:
+            "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
+            infoBuffer +
+            "\n------------------------------ 📻   PAGE (" +
+            (offset / 10 + 1) +
+            "/" +
+            parseInt((songs.length - 1) / 10 + 1) +
+            ")   ------------------------------------```",
+          components: [row0],
+        });
       } else {
-        await interaction.channel
-          .send({
-            content:
-              "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
-              infoBuffer +
-              "\n------------------------------ 📻   PAGE (" +
-              (offset / 10 + 1) +
-              "/" +
-              parseInt((queue.songs.length - 1) / 10 + 1) +
-              ")   ------------------------------------```",
-            components: [row3],
-          })
-          .then(message => {
-            msgId = message.id;
-          });
+        message = await interaction.channel.send({
+          content:
+            "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
+            infoBuffer +
+            "\n------------------------------ 📻   PAGE (" +
+            (offset / 10 + 1) +
+            "/" +
+            parseInt((songs.length - 1) / 10 + 1) +
+            ")   ------------------------------------```",
+          components: [row3],
+        });
       }
-      const collector = interaction.channel.createMessageComponentCollector({
-        time: 30000,
+      const collector = message.createMessageComponentCollector({
+        time: 300000,
       });
       collector.on("collect", async i => {
-        if (i.customId === "next" && i.message.id === msgId) {
+        if (i.customId === "next") {
           collector.resetTimer();
           offset += 10;
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
-            if (x + offset < queue.songs.length && x + offset >= 0) {
+            if (x + offset < songs.length && x + offset >= 0) {
               infoBuffer +=
                 x +
                 offset +
-                " - [" +
-                queue.songs[x + offset].formattedDuration +
-                "] - " +
-                queue.songs[x + offset].name +
+                " " +
+                FIRST_SEPARATOR +
+                "[" +
+                songs[x + offset].duration +
+                "] " +
+                SECOND_SEPARATOR +
+                " " +
+                songs[x + offset].author +
+                " - " +
+                songs[x + offset].title +
                 "\n";
             }
           }
-          if (offset + 10 >= queue.songs.length) {
+          if (offset + 10 >= songs.length) {
             await i.update({
               content:
                 "```------------------------------ 📻   CURRENT QUEUE   ------------------------------\n\n" +
@@ -128,7 +144,7 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row2],
             });
@@ -140,24 +156,30 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row1],
             });
           }
-        } else if (i.customId === "prev" && i.message.id === msgId) {
+        } else if (i.customId === "prev") {
           collector.resetTimer();
           offset -= 10;
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
-            if (x + offset < queue.songs.length && x + offset >= 0) {
+            if (x + offset < songs.length && x + offset >= 0) {
               infoBuffer +=
                 x +
                 offset +
-                " - [" +
-                queue.songs[x + offset].formattedDuration +
-                "] - " +
-                queue.songs[x + offset].name +
+                " " +
+                FIRST_SEPARATOR +
+                "[" +
+                songs[x + offset].duration +
+                "] " +
+                SECOND_SEPARATOR +
+                " " +
+                songs[x + offset].author +
+                " - " +
+                songs[x + offset].title +
                 "\n";
             }
           }
@@ -169,7 +191,7 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row0],
             });
@@ -181,7 +203,7 @@ module.exports = {
                 "\n------------------------------ 📻   PAGE (" +
                 (offset / 10 + 1) +
                 "/" +
-                parseInt((queue.songs.length - 1) / 10 + 1) +
+                parseInt((songs.length - 1) / 10 + 1) +
                 ")   ------------------------------------```",
               components: [row1],
             });
@@ -189,7 +211,7 @@ module.exports = {
         }
       });
       collector.on("end", () => {
-        interaction.channel.messages.fetch(msgId).then(message => message.delete());
+        message.delete();
       });
       return interaction.deleteReply();
     }

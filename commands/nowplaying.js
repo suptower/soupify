@@ -1,21 +1,26 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
+const { getQueue } = require("../music/queue");
+
+const PROGRESS_SEGMENTS = 10;
+
 module.exports = {
   data: new SlashCommandBuilder().setName("nowplaying").setDescription("Information to the current playing song."),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
-    const queue = distube.getQueue(interaction.guild);
-    if (!queue) {
+    const queue = getQueue(player, interaction.guild);
+    if (!queue || !queue.currentTrack) {
       return interaction.editReply("There is no queue.");
     }
-    const song = queue.songs[0];
-    const timeCurrent = queue.currentTime;
-    const timeCurrentFormatted = queue.formattedCurrentTime;
-    const duration = song.duration;
-    const durationFormatted = song.formattedDuration;
-    const partial = parseInt(duration / 15);
-    const done = parseInt(timeCurrent / partial);
-    const undone = 15 - done;
+    const song = queue.currentTrack;
+    const timestamp = queue.node.getTimestamp();
+    const timeCurrent = parseInt((timestamp?.current?.value ?? 0) / 1000);
+    const timeCurrentFormatted = timestamp?.current?.label ?? "0:00";
+    const duration = parseInt(song.durationMS / 1000);
+    const durationFormatted = song.duration;
+    const partial = Math.max(parseInt(duration / PROGRESS_SEGMENTS), 1);
+    const done = Math.min(PROGRESS_SEGMENTS, parseInt(timeCurrent / partial));
+    const undone = PROGRESS_SEGMENTS - done;
     let infoBuffer = "▶️  ";
     for (let i = 0; i < done; i++) {
       infoBuffer += "▬";
@@ -29,11 +34,12 @@ module.exports = {
       .setColor("#1db954")
       .setTitle("ℹ️   Currently playing")
       .addFields(
-        { name: "Title", value: `${song.name}` },
-        { name: infoBuffer, value: "\u200B", inline: true },
-        { name: timeDisplay, value: "\u200B", inline: true },
-        { name: "Source", value: `${song.url}` },
-      );
+        { name: "Title", value: `${song.author} - ${song.cleanTitle}` },
+        { name: "Duration", value: `${durationFormatted}`, inline: true },
+        { name: "Progress", value: `${infoBuffer} ${timeDisplay}`, inline: true },
+        { name: "Source", value: `[Link](${song.url})` },
+      )
+      .setThumbnail(song.thumbnail);
     return interaction.editReply({ embeds: [nowplayingEmbed] });
   },
 };

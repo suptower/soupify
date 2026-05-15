@@ -1,8 +1,14 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
+const { enqueuePlaylist } = require("../music/playlists");
 module.exports = {
-  data: new SlashCommandBuilder().setName("essentials").setDescription("Plays Essentials 2010 playlist"),
-  async execute(interaction, distube) {
+  data: new SlashCommandBuilder()
+    .setName("essentials")
+    .setDescription("Plays Essentials 2010 playlist")
+    .addBooleanOption(option =>
+      option.setName("shuffle").setDescription("Whether to shuffle the playlist").setRequired(false),
+    ),
+  async execute(interaction, player) {
     await interaction.deferReply();
     if (!interaction.member.voice.channel) {
       return interaction.editReply("You need to be connected to a voice channel.");
@@ -16,12 +22,19 @@ module.exports = {
         { name: "Author", value: "https://spoti.fi/3yz6Wdg" },
         { name: "Playlist", value: "https://spoti.fi/3GUVTOr" },
       );
-    const vc = interaction.member.voice.channel;
+    const shuffle = interaction.options.getBoolean("shuffle") ?? false;
     const songString = "https://open.spotify.com/playlist/1FQypuz87kt9ICJi64CjHq?si=2a03feeb2f8c4cd5";
-    distube.play(vc, songString, {
-      member: interaction.member,
-      textChannel: interaction.channel,
-    });
+    try {
+      await enqueuePlaylist({
+        player,
+        interaction,
+        playlistUrl: songString,
+        shuffle,
+      });
+    } catch (error) {
+      console.error(error);
+      return interaction.editReply("Error: " + error.message);
+    }
     interaction.channel.send({ embeds: [InfoEmbed] });
     return await interaction.editReply(
       "<:essentials:921394784915050516>   Successfully added `ESSENTIALS 2010` to the queue.",

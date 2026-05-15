@@ -9,10 +9,13 @@ module.exports = {
         .setDescription("Create a playlist of bangers by specifying the amount of songs you want to add.")
         .setRequired(false),
     ),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
     const amount = interaction.options.getInteger("amount");
     let reply = "";
+    if (!interaction.member.voice.channel) {
+      return interaction.editReply("You need to be connected to a voice channel.");
+    }
     /* BANGERS
 			0 - Swedish House Mafia - Lifetime
 			1 - G-Eazy - Me, Myself & I
@@ -146,42 +149,40 @@ module.exports = {
     if (amount == null) {
       const rand = Math.floor(Math.random() * bangers.length);
       const songString = bangers[rand];
-      distube.play(vc, songString, {
-        member: interaction.member,
-        textChannel: interaction.channel,
+      await player.play(vc, songString, {
+        requestedBy: interaction.member,
+        nodeOptions: {
+          metadata: { channel: interaction.channel },
+          leaveOnEmpty: true,
+          leaveOnStop: true,
+          leaveOnEnd: true,
+        },
       });
       reply = "💥   Banger added.";
     } else {
-      const songArray = [];
+      let songArray = [];
       if (amount < bangers.length) {
         for (let i = 0; i < amount; i++) {
           const rand = Math.floor(Math.random() * bangers.length);
           songArray.push(bangers[rand]);
           bangers.splice(rand, 1);
         }
-        distube
-          .createCustomPlaylist(songArray, {
-            member: interaction.member,
-          })
-          .then(playlist =>
-            distube.play(vc, playlist, {
-              member: interaction.member,
-              textChannel: interaction.channel,
-            }),
-          );
         reply = "💥   " + amount + " Bangers added.";
       } else {
-        distube
-          .createCustomPlaylist(bangers, {
-            member: interaction.member,
-          })
-          .then(playlist =>
-            distube.play(vc, playlist, {
-              member: interaction.member,
-              textChannel: interaction.channel,
-            }),
-          );
+        songArray = bangers;
         reply = "💥   All bangers added.";
+      }
+
+      for (const song of songArray) {
+        await player.play(vc, song, {
+          requestedBy: interaction.member,
+          nodeOptions: {
+            metadata: { channel: interaction.channel },
+            leaveOnEmpty: true,
+            leaveOnStop: true,
+            leaveOnEnd: true,
+          },
+        });
       }
     }
     return await interaction.editReply(reply);

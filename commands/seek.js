@@ -1,19 +1,23 @@
 const { SlashCommandBuilder } = require("discord.js");
+const { getQueue } = require("../music/queue");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("seek")
     .setDescription("Fast forward (for positive values) or fast rewind (for negative values) in seconds")
     .addIntegerOption(option => option.setName("time").setDescription("in seconds").setRequired(true)),
-  async execute(interaction, distube) {
+  async execute(interaction, player) {
     await interaction.deferReply();
-    const queue = distube.getQueue(interaction.guild);
-    const toSeek = interaction.options.getInteger("time");
-    const newTime = queue.currentTime + toSeek;
-    if (!queue) {
+    const queue = getQueue(player, interaction.guild);
+    if (!queue || !queue.currentTrack) {
       return interaction.editReply("This does only work if there is a queue.");
-    } else if (newTime > 0) {
-      if (newTime < queue.songs[0].duration) {
-        distube.seek(interaction.guild, newTime);
+    }
+    const timestamp = queue.node.getTimestamp();
+    const currentTime = parseInt((timestamp?.current?.value ?? 0) / 1000);
+    const toSeek = interaction.options.getInteger("time");
+    const newTime = currentTime + toSeek;
+    if (newTime > 0) {
+      if (newTime < parseInt(queue.currentTrack.durationMS / 1000)) {
+        await queue.node.seek(newTime * 1000);
       } else {
         return interaction.editReply("This operation would have resulted into skipping the current song.");
       }
