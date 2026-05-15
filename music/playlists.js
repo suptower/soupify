@@ -16,6 +16,13 @@ const fisherYatesShuffle = tracks => {
 };
 
 const enqueuePlaylist = async ({ player, interaction, playlistUrl, shuffle }) => {
+  if (!interaction.guild) {
+    throw new Error("This command can only be used inside a server.");
+  }
+  if (!interaction.member.voice?.channel) {
+    throw new Error("You need to be connected to a voice channel.");
+  }
+
   const result = await player.search(playlistUrl, {
     requestedBy: interaction.member,
   });
@@ -29,15 +36,12 @@ const enqueuePlaylist = async ({ player, interaction, playlistUrl, shuffle }) =>
     fisherYatesShuffle(tracks);
   }
 
-  if (!interaction.guild) {
-    throw new Error("This command can only be used inside a server.");
-  }
-  if (!interaction.member.voice?.channel) {
-    throw new Error("You need to be connected to a voice channel.");
-  }
-
   const queue = player.nodes.get(interaction.guild) ?? createPlaybackQueue(player, interaction);
-  queue.addTrack(tracks);
+  if (typeof queue.addTracks === "function") {
+    queue.addTracks(tracks);
+  } else {
+    queue.addTrack(tracks);
+  }
 
   if (!queue.connection) {
     await queue.connect(interaction.member.voice.channel);
