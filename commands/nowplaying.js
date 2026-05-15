@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
 const { getQueue } = require("../music/queue");
 
-const PROGRESS_SEGMENTS = 15;
+const PROGRESS_SEGMENTS = 10;
 
 module.exports = {
   data: new SlashCommandBuilder().setName("nowplaying").setDescription("Information to the current playing song."),
@@ -34,11 +34,12 @@ module.exports = {
       .setColor("#1db954")
       .setTitle("ℹ️   Currently playing")
       .addFields(
-        { name: "Title", value: `${song.title}` },
-        { name: infoBuffer, value: "\u200B", inline: true },
-        { name: timeDisplay, value: "\u200B", inline: true },
-        { name: "Source", value: `${song.url}` },
-      );
+        { name: "Title", value: `${song.author} - ${song.cleanTitle}` },
+        { name: "Duration", value: `${durationFormatted}`, inline: true },
+        { name: "Progress", value: `${infoBuffer} ${timeDisplay}`, inline: true },
+        { name: "Source", value: `[Link](${song.url})`}
+      )
+      .setThumbnail(song.thumbnail);
     return interaction.editReply({ embeds: [nowplayingEmbed] });
   },
 };

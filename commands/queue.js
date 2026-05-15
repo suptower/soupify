@@ -1,6 +1,9 @@
 const { SlashCommandBuilder, ButtonStyle } = require("discord.js");
 const { ActionRowBuilder, ButtonBuilder } = require("discord.js");
 const { getQueue, getQueueTracks } = require("../music/queue");
+
+const FIRST_SEPARATOR = "▶️ ";
+const SECOND_SEPARATOR = "ℹ️";
 module.exports = {
   data: new SlashCommandBuilder().setName("queue").setDescription("Show the queue"),
   async execute(interaction, player) {
@@ -66,7 +69,7 @@ module.exports = {
       let infoBuffer = "";
       let offset = 0;
       for (let i = 0; i < 10 && i < songs.length; i++) {
-        infoBuffer += i + offset + " - [" + songs[i].duration + "] - " + songs[i].title + "\n";
+        infoBuffer += i + offset + " " + FIRST_SEPARATOR + "[" + songs[i].duration + "] " + SECOND_SEPARATOR + " " + songs[i].author + " - " + songs[i].title + "\n";
       }
       let message;
       if (songs.length > 10) {
@@ -97,7 +100,7 @@ module.exports = {
           })
       }
       const collector = message.createMessageComponentCollector({
-        time: 30000,
+        time: 300000,
       });
       collector.on("collect", async i => {
         if (i.customId === "next") {
@@ -106,7 +109,7 @@ module.exports = {
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
             if (x + offset < songs.length && x + offset >= 0) {
-              infoBuffer += x + offset + " - [" + songs[x + offset].duration + "] - " + songs[x + offset].title + "\n";
+              infoBuffer += x + offset + " " + FIRST_SEPARATOR + "[" + songs[x + offset].duration + "] " + SECOND_SEPARATOR + " " + songs[x + offset].author + " - " + songs[x + offset].title + "\n";
             }
           }
           if (offset + 10 >= songs.length) {
@@ -140,7 +143,7 @@ module.exports = {
           infoBuffer = "";
           for (let x = 0; x < 10; x++) {
             if (x + offset < songs.length && x + offset >= 0) {
-              infoBuffer += x + offset + " - [" + songs[x + offset].duration + "] - " + songs[x + offset].title + "\n";
+              infoBuffer += x + offset + " " + FIRST_SEPARATOR + "[" + songs[x + offset].duration + "] " + SECOND_SEPARATOR + " " + songs[x + offset].author + " - " + songs[x + offset].title + "\n";
             }
           }
           if (offset === 0) {

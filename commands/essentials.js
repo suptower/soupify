@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
 module.exports = {
-  data: new SlashCommandBuilder().setName("essentials").setDescription("Plays Essentials 2010 playlist"),
+  data: new SlashCommandBuilder().setName("essentials").setDescription("Plays Essentials 2010 playlist").addBooleanOption(option => option.setName("shuffle").setDescription("Whether to shuffle the playlist").setRequired(false)),
   async execute(interaction, player) {
     await interaction.deferReply();
     if (!interaction.member.voice.channel) {
@@ -17,16 +17,33 @@ module.exports = {
         { name: "Playlist", value: "https://spoti.fi/3GUVTOr" },
       );
     const vc = interaction.member.voice.channel;
+    const shuffle = interaction.options.getBoolean("shuffle") ?? false;
     const songString = "https://open.spotify.com/playlist/1FQypuz87kt9ICJi64CjHq?si=2a03feeb2f8c4cd5";
-    await player.play(vc, songString, {
-      requestedBy: interaction.member,
-      nodeOptions: {
-        metadata: { channel: interaction.channel },
-        leaveOnEmpty: true,
-        leaveOnStop: true,
-        leaveOnEnd: true,
-      },
-    });
+    if (shuffle) {
+      const playlist = await player.playlist(songString, {
+        requestedBy: interaction.user,
+      });
+      playlist.tracks.shuffle();
+      await player.play(vc, playlist, {
+        requestedBy: interaction.user,
+        nodeOptions: {
+          metadata: { channel: interaction.channel },
+          leaveOnEmpty: true,
+          leaveOnStop: true,
+          leaveOnEnd: true,
+        },
+      });
+    } else {
+      await player.play(vc, songString, {
+        requestedBy: interaction.user,
+        nodeOptions: {
+          metadata: { channel: interaction.channel },
+          leaveOnEmpty: true,
+          leaveOnStop: true,
+          leaveOnEnd: true,
+        },
+      });
+    }
     interaction.channel.send({ embeds: [InfoEmbed] });
     return await interaction.editReply(
       "<:essentials:921394784915050516>   Successfully added `ESSENTIALS 2010` to the queue.",

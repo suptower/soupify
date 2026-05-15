@@ -1,6 +1,7 @@
 const { EmbedBuilder } = require("discord.js");
 const { Player } = require("discord-player");
-const { DefaultExtractors } = require("@discord-player/extractor");
+const { YoutubeiExtractor } = require("discord-player-youtubei");
+const { SpotifyExtractor } = require("discord-player-spotify");
 
 const createPlayer = async client => {
   // eslint-disable-next-line new-cap
@@ -8,7 +9,8 @@ const createPlayer = async client => {
 
   // console.log(player.scanDeps());
 
-  await player.extractors.loadMulti(DefaultExtractors);
+  await player.extractors.register(YoutubeiExtractor);
+  await player.extractors.register(SpotifyExtractor);
 
   // player.on('debug', (message) => {
   //   console.log('[Player Debug]', message);
@@ -21,10 +23,15 @@ const createPlayer = async client => {
       embeds: [
         new EmbedBuilder()
           .setTitle("Now Playing")
-          .setDescription(`[${track.title}](${track.url})`)
+          .setDescription(`${track.author} - ${track.cleanTitle}`)
           .setThumbnail(track.thumbnail)
           .setColor("#1db954")
-          .setFooter({ text: "Requested by " + track.requestedBy.tag, iconURL: track.requestedBy.displayAvatarURL() }),
+          .setFooter({ text: "Requested by " + track.requestedBy.tag, iconURL: track.requestedBy.displayAvatarURL() })
+          .addFields(
+            { name: "Duration", value: track.duration, inline: true },
+            { name: "Source", value: `[Link](${track.url})`, inline: true },
+            
+          )
       ],
     });
   });

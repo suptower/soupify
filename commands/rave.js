@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { EmbedBuilder } = require("discord.js");
 module.exports = {
-  data: new SlashCommandBuilder().setName("rave").setDescription("Plays RAVE AVENUE playlist"),
+  data: new SlashCommandBuilder().setName("rave").setDescription("Plays RAVE AVENUE playlist").addBooleanOption(option => option.setName("shuffle").setDescription("Whether to shuffle the playlist").setRequired(false)),
   async execute(interaction, player) {
     await interaction.deferReply();
     if (!interaction.member.voice.channel) {
@@ -18,15 +18,32 @@ module.exports = {
       );
     const vc = interaction.member.voice.channel;
     const songString = "https://open.spotify.com/playlist/79gyv8Wdrdrujk2NgFfIBS?si=e7386ea3903841a1";
-    await player.play(vc, songString, {
-      requestedBy: interaction.member,
-      nodeOptions: {
-        metadata: { channel: interaction.channel },
-        leaveOnEmpty: true,
-        leaveOnStop: true,
-        leaveOnEnd: true,
-      },
-    });
+    const shuffle = interaction.options.getBoolean("shuffle") ?? false;
+    if (shuffle) {
+      const playlist = await player.playlist(songString, {
+        requestedBy: interaction.user,
+      });
+      playlist.tracks.shuffle();
+      await player.play(vc, playlist, {
+        requestedBy: interaction.user,
+        nodeOptions: {
+          metadata: { channel: interaction.channel },
+          leaveOnEmpty: true,
+          leaveOnStop: true,
+          leaveOnEnd: true,
+        },
+      });
+    } else {
+      await player.play(vc, songString, {
+        requestedBy: interaction.user,
+        nodeOptions: {
+          metadata: { channel: interaction.channel },
+          leaveOnEmpty: true,
+          leaveOnStop: true,
+          leaveOnEnd: true,
+        },
+      });
+    }
     interaction.channel.send({ embeds: [InfoEmbed] });
     return await interaction.editReply(
       "<:raveavenue:1035960856862806106>   Successfully added `RAVE AVENUE` to the queue.",
